@@ -26,6 +26,7 @@
         <module>web-portal</module>
         <module>apollo-core</module>
         <module>apollo-worker</module>
+        <module>starter</module>
     </modules>
 
     <dependencyManagement>
