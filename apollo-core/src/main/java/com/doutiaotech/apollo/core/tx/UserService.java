@@ -1,6 +1,6 @@
 package com.doutiaotech.apollo.core.tx;
 
-import com.doutiaotech.apollo.core.dao.mysql.UserDao;
+import com.doutiaotech.apollo.infrastructure.mysql.dao.UserDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

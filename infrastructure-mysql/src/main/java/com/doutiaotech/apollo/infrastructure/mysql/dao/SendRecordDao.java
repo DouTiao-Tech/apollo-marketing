@@ -1,6 +1,6 @@
-package com.doutiaotech.apollo.core.dao.mysql;
+package com.doutiaotech.apollo.infrastructure.mysql.dao;
 
-import com.doutiaotech.apollo.core.model.mysql.SendRecord;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SendRecord;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 

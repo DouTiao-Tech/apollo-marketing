@@ -1,8 +1,8 @@
-package com.doutiaotech.apollo.core.config;
+package com.doutiaotech.apollo.infrastructure.clickhouse;
 
 import javax.sql.DataSource;
 
-import com.doutiaotech.apollo.core.dao.clickhouse.TradeDao;
+import com.doutiaotech.apollo.infrastructure.clickhouse.dao.TradeDao;
 import com.zaxxer.hikari.HikariDataSource;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;

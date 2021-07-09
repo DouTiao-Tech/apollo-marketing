@@ -1,6 +1,6 @@
-package com.doutiaotech.apollo.core.dao.mysql;
+package com.doutiaotech.apollo.infrastructure.mysql.dao;
 
-import com.doutiaotech.apollo.core.model.mysql.User;
+import com.doutiaotech.apollo.infrastructure.mysql.model.User;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 

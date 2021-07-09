@@ -1,7 +1,7 @@
 package com.doutiao.apollo.sms.domain;
 
-import com.doutiaotech.apollo.core.model.mysql.SendRecord;
-import com.doutiaotech.apollo.core.model.mysql.SmsTemplate;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SendRecord;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SmsTemplate;
 
 public class Sms {
     public Sms(SendRecord record, SmsTemplate smsTemplate) {

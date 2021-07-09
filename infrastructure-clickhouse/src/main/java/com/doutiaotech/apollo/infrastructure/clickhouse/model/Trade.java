@@ -1,4 +1,4 @@
-package com.doutiaotech.apollo.core.model.clickhouse;
+package com.doutiaotech.apollo.infrastructure.clickhouse.model;
 
 import lombok.Data;
 

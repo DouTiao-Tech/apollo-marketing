@@ -1,6 +1,6 @@
-package com.doutiaotech.apollo.core.dao.mysql;
+package com.doutiaotech.apollo.infrastructure.mysql.dao;
 
-import com.doutiaotech.apollo.core.model.mysql.SmsTemplate;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SmsTemplate;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 

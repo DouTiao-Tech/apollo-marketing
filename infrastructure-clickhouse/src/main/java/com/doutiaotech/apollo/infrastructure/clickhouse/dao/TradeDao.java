@@ -1,6 +1,6 @@
-package com.doutiaotech.apollo.core.dao.clickhouse;
+package com.doutiaotech.apollo.infrastructure.clickhouse.dao;
 
-import com.doutiaotech.apollo.core.model.clickhouse.Trade;
+import com.doutiaotech.apollo.infrastructure.clickhouse.model.Trade;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 

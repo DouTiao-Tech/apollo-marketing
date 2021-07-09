@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.doutiaotech</groupId>
+    <groupId>com.doutiaotech.apollo</groupId>
     <artifactId>apollo</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
@@ -25,6 +24,8 @@
         <module>sms-invoker</module>
         <module>web-portal</module>
         <module>apollo-core</module>
+        <module>infrastructure-mysql</module>
+        <module>infrastructure-clickhouse</module>
         <module>apollo-worker</module>
         <module>starter</module>
     </modules>
@@ -64,6 +65,43 @@
                 <groupId>ru.yandex.clickhouse</groupId>
                 <artifactId>clickhouse-jdbc</artifactId>
                 <version>0.3.1</version>
+            </dependency>
+
+            <!-- all module -->
+            <dependency>
+                <groupId>com.doutiaotech.apollo</groupId>
+                <artifactId>api-syncer</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.doutiaotech.apollo</groupId>
+                <artifactId>apollo-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.doutiaotech.apollo</groupId>
+                <artifactId>apollo-worker</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.doutiaotech.apollo</groupId>
+                <artifactId>web-portal</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.doutiaotech.apollo</groupId>
+                <artifactId>sms-invoker</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.doutiaotech.apollo</groupId>
+                <artifactId>infrastructure-mysql</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.doutiaotech.apollo</groupId>
+                <artifactId>infrastructure-clickhouse</artifactId>
+                <version>${revision}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

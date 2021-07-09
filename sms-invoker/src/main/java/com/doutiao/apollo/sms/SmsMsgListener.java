@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 
 import com.doutiao.apollo.sms.domain.Sms;
 import com.doutiao.apollo.sms.sender.CompositeSender;
-import com.doutiaotech.apollo.core.dao.mysql.SendRecordDao;
-import com.doutiaotech.apollo.core.dao.mysql.SmsTemplateDao;
-import com.doutiaotech.apollo.core.model.mysql.SendRecord;
-import com.doutiaotech.apollo.core.model.mysql.SmsTemplate;
+import com.doutiaotech.apollo.infrastructure.mysql.dao.SendRecordDao;
+import com.doutiaotech.apollo.infrastructure.mysql.dao.SmsTemplateDao;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SendRecord;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SmsTemplate;
 import com.google.common.collect.Streams;
 
 import org.springframework.beans.factory.annotation.Autowired;

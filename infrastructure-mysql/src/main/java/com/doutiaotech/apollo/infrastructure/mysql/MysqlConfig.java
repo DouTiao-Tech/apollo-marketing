@@ -1,8 +1,8 @@
-package com.doutiaotech.apollo.core.config;
+package com.doutiaotech.apollo.infrastructure.mysql;
 
 import javax.sql.DataSource;
 
-import com.doutiaotech.apollo.core.dao.mysql.UserDao;
+import com.doutiaotech.apollo.infrastructure.mysql.dao.UserDao;
 import com.zaxxer.hikari.HikariDataSource;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;

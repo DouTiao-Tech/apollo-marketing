@@ -1,29 +1,20 @@
-package com.doutiaotech.apollo.core.model.mysql;
+package com.doutiaotech.apollo.infrastructure.mysql.model;
 
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Version;
 
 import lombok.Data;
 
 @Data
-public class SendRecord {
+public class User {
 
     @Id
     private Long id;
 
-    @Version
-    private Long version;
-
-    /**
-     * @see SmsTemplate#getId()
-     */
-    private Long templateId;
-
-    private String params;
+    private String shopName;
 
     @CreatedDate
     private LocalDateTime created;

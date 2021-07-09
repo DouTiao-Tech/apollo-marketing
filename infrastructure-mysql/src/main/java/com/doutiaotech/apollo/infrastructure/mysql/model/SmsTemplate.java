@@ -1,4 +1,4 @@
-package com.doutiaotech.apollo.core.model.mysql;
+package com.doutiaotech.apollo.infrastructure.mysql.model;
 
 import java.time.LocalDateTime;
 
