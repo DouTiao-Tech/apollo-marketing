@@ -1,14 +1,16 @@
 package com.doutiaotech.apollo.core.model.mysql;
 
-import com.doutiaotech.apollo.core.model.BaseModel;
+import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 
 import lombok.Data;
 
 @Data
-public class SmsTemplate extends BaseModel {
+public class SmsTemplate {
 
     @Id
     private Long id;
@@ -18,4 +20,9 @@ public class SmsTemplate extends BaseModel {
 
     private String content;
 
+    @CreatedDate
+    private LocalDateTime created;
+
+    @LastModifiedDate
+    private LocalDateTime lastModified;
 }

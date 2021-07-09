@@ -1,14 +1,16 @@
 package com.doutiaotech.apollo.core.model.mysql;
 
-import com.doutiaotech.apollo.core.model.BaseModel;
+import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 
 import lombok.Data;
 
 @Data
-public class SendRecord extends BaseModel {
+public class SendRecord {
 
     @Id
     private Long id;
@@ -23,4 +25,9 @@ public class SendRecord extends BaseModel {
 
     private String params;
 
+    @CreatedDate
+    private LocalDateTime created;
+
+    @LastModifiedDate
+    private LocalDateTime lastModified;
 }
