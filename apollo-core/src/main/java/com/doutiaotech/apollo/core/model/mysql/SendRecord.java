@@ -16,6 +16,9 @@ public class SendRecord extends BaseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * @see SmsTemplate#getId()
+     */
     private Long templateId;
 
     private String params;
