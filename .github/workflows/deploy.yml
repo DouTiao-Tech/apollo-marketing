@@ -40,7 +40,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{secrets.PASSPHRASE}}
           source: "starter/target/starter-${{github.event.inputs.revision}}.jar"
-          target: "~/apollo-starter-${{github.event.inputs.revision}}.jar"
+          target: "~"
+          strip_components: 2
       - name: SSH Remote Commands
         uses: appleboy/ssh-action@master
         with:
@@ -50,10 +51,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{secrets.PASSPHRASE}}
           script: |
-            sudo /etc/init.d/apollo stop
-            mv ~/apollo.jar ~/apollo-old.jar
-            mv ~/apollo-starter-${{github.event.inputs.revision}}.jar ~/apollo.jar
-            sudo rm -rf /etc/init.d/apollo
+            [[ -f /etc/init.d/apollo ]] && sudo /etc/init.d/apollo stop
+            [[ -f ~/apollo.jar ]] && mv ~/apollo.jar ~/apollo-old.jar
+            mv ~/starter-${{github.event.inputs.revision}}.jar ~/apollo.jar
+            [[ -f /etc/init.d/apollo ]] && sudo rm -rf /etc/init.d/apollo
             sudo ln -s -f ~/apollo.jar /etc/init.d/apollo
             sudo /etc/init.d/apollo start
-            rm ~/apollo-old.jar
+            [[ -f ~/apollo.jar ]] && rm ~/apollo-old.jar
