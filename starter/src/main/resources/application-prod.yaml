@@ -1,0 +1,11 @@
+logging:
+  group:
+    apollo: com.doutiaotech.apollo
+  level:
+    root: info
+    sql: warn
+    web: info
+    apollo: info
+
+  file:
+    path: ./.logs

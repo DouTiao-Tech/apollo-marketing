@@ -1,20 +1,20 @@
 package com.doutiaotech.apollo.core.model.mysql;
 
 import com.doutiaotech.apollo.core.model.BaseModel;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
+
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 @Data
-@Entity
 public class SendRecord extends BaseModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Version
+    private Long version;
 
     /**
      * @see SmsTemplate#getId()

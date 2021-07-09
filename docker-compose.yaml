@@ -22,12 +22,14 @@ services:
       - MYSQL_ROOT_PASSWORD=xudjf23adj213
       - MYSQL_USER=apollo
       - MYSQL_PASSWORD=apollo-passwd
-#    volumes:
-#      - ./.data/mysql:/var/lib/mysql
+    volumes:
+      - ./.init-sql/mysql:/docker-entrypoint-initdb.d
+  #      - ./.data/mysql:/var/lib/mysql
   clickhouse-server:
     image: yandex/clickhouse-server
     ports:
       - 8123:8123 # http interface
       - 9000:9000 # native client
-#    volumes:
+    volumes:
+      - ./.init-sql/clickhouse:/docker-entrypoint-initdb.d
 #      - ./.data/clickhouse:/var/lib/clickhouse

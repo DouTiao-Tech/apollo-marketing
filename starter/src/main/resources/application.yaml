@@ -1,0 +1,9 @@
+logging:
+  level:
+    root: info
+    sql: debug
+    web: debug
+    com.doutiaotech.apollo: debug
+
+  file:
+    path: ./.logs
