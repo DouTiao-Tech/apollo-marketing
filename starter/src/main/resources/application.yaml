@@ -1,9 +1,14 @@
+spring:
+  application:
+    name: apollo-marketing
 logging:
+  group:
+    apollo: com.doutiaotech.apollo
   level:
     root: info
     sql: debug
     web: debug
-    com.doutiaotech.apollo: debug
+    apollo: debug
 
   file:
     path: ./.logs
