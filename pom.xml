@@ -14,6 +14,7 @@
         <target.version>1.8</target.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <spring-boot.version>2.3.1.RELEASE</spring-boot.version>
+        <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <dubbo.version>2.7.8</dubbo.version>
         <guava.version>30.1.1-jre</guava.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,7 +26,8 @@
         <module>web-portal</module>
         <module>apollo-core</module>
         <module>infrastructure-mysql</module>
-        <module>infrastructure-clickhouse</module>
+        <module>external-dy-api</module>
+        <module>starter</module>
         <module>apollo-worker</module>
         <module>starter</module>
     </modules>
@@ -37,6 +39,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-parent</artifactId>
                 <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -68,6 +77,11 @@
             </dependency>
 
             <!-- all module -->
+            <dependency>
+                <groupId>com.doutiaotech.apollo</groupId>
+                <artifactId>external-dy-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <dependency>
                 <groupId>com.doutiaotech.apollo</groupId>
                 <artifactId>api-syncer</artifactId>
