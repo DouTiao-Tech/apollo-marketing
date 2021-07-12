@@ -5,11 +5,11 @@ create database if not exists apollo;
 create table if not exists apollo.trade
 (
     id       Int64,
-    shopId   Int64,
+    shop_id   Int64,
     name     String,
     payment  Decimal32(2),
     created  DateTime,
     modified DateTime
 ) engine = MergeTree()
-      order by (shopId, id)
+      order by (shop_id, id)
       partition by toYYYYMMDD(created);

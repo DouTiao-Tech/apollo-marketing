@@ -1,6 +1,11 @@
 spring:
   application:
     name: apollo-marketing
+  profiles:
+    include:
+      - mysql
+      - clickhouse
+      - web
 logging:
   group:
     apollo: com.doutiaotech.apollo

@@ -1,0 +1,7 @@
+mysql:
+  datasource:
+    jdbcUrl: jdbc:mysql://localhost:3306/apollo
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: apollo
+    password: apollo-passwd
+    type: com.zaxxer.hikari.HikariDataSource

@@ -2,6 +2,8 @@ create database apollo character set = utf8mb4;
 
 grant all on apollo.* to apollo;
 
+use apollo;
+
 create table if not exists `user` (
     id bigint primary key auto_increment,
     shop_name varchar(128) not null,

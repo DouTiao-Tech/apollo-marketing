@@ -1,20 +1,25 @@
 package com.doutiaotech.apollo.infrastructure.clickhouse;
 
-import javax.sql.DataSource;
-
-import com.doutiaotech.apollo.infrastructure.clickhouse.dao.TradeDao;
+import com.doutiaotech.apollo.infrastructure.clickhouse.mapper.TradeMapper;
 import com.zaxxer.hikari.HikariDataSource;
-
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+
+import javax.sql.DataSource;
 
 @Configuration
-@EnableJdbcRepositories(jdbcOperationsRef = "clickHouseOperations", basePackageClasses = TradeDao.class, namedQueriesLocation = "classpath:sql/clickhouse.properties")
+@MapperScan(basePackageClasses = TradeMapper.class)
 public class ClickHouseConfig {
+
+    @Autowired
+    private MybatisProperties properties;
 
     @Bean
     @ConfigurationProperties("clickhouse.datasource")
@@ -22,9 +27,22 @@ public class ClickHouseConfig {
         return new HikariDataSource();
     }
 
+    /**
+     * @see org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration#sqlSessionFactory(DataSource)
+     */
     @Bean
-    public NamedParameterJdbcOperations clickHouseOperations() {
-        return new NamedParameterJdbcTemplate(clickHouseDataSource());
+    public SqlSessionFactoryBean sqlSessionFactory() {
+        SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
+        factory.setDataSource(clickHouseDataSource());
+        org.apache.ibatis.session.Configuration configuration = this.properties.getConfiguration();
+        if (configuration == null && !StringUtils.hasText(this.properties.getConfigLocation())) {
+            configuration = new org.apache.ibatis.session.Configuration();
+        }
+        factory.setConfiguration(configuration);
+        if (!ObjectUtils.isEmpty(this.properties.resolveMapperLocations())) {
+            factory.setMapperLocations(this.properties.resolveMapperLocations());
+        }
+        return factory;
     }
 
 }
