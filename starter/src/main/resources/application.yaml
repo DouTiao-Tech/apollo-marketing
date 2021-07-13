@@ -12,6 +12,7 @@ spring:
       properties:
         enable:
           idempotence: true
+      bootstrap-servers: localhost:19092
   mvc:
     format:
       date: yyyy-MM-dd

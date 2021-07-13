@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableJdbcAuditing
 @EnableJdbcRepositories(jdbcOperationsRef = "mysqlOperations", basePackageClasses = UserDao.class, namedQueriesLocation = "classpath:sql/mysql.properties")
-public class MysqlConfig {
+public class MysqlAutoConfiguration {
 
     @Bean
     @Primary

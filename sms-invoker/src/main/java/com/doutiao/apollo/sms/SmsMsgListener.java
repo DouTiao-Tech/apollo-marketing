@@ -13,10 +13,12 @@ import com.doutiaotech.apollo.infrastructure.mysql.model.SendRecord;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SmsTemplate;
 import com.google.common.collect.Streams;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class SmsMsgListener {
 
@@ -29,8 +31,9 @@ public class SmsMsgListener {
     @Autowired
     private CompositeSender compositeSender;
 
-    @KafkaListener(topics = "trade", groupId = "sms-invoker")
+    @KafkaListener(topics = "sms", groupId = "sms-invoker")
     public void sendSms(List<Long> sendRecordIds) {
+        log.info("fetch sms record:{} size", sendRecordIds.size());
         Iterable<SendRecord> records = sendRecordDao.findAllById(sendRecordIds);
         batchSend(records);
     }

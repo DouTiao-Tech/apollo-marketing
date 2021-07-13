@@ -6,13 +6,19 @@ services:
     ports:
       - 2181:2181
   kafka-broker:
-    image: debezium/kafka:1.5
+    image: wurstmeister/kafka:2.13-2.7.0
     ports:
-      - 9092:9092
+      - 19092:19092
     depends_on:
       - zookeeper
     environment:
-      - ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      - KAFKA_LISTENERS=INSIDE://:9092,OUTSIDE://:19092
+      - KAFKA_ADVERTISED_LISTENERS=INSIDE://:9092,OUTSIDE://localhost:19092
+#      - KAFKA_ADVERTISED_LISTENERS=INSIDE://:9092,OUTSIDE://report:19092
+      - KAFKA_INTER_BROKER_LISTENER_NAME=INSIDE
+      - KAFKA_CREATE_TOPICS=trade:2:1,sms:2:1
   mysql:
     image: mysql:5.6.50
     restart: always

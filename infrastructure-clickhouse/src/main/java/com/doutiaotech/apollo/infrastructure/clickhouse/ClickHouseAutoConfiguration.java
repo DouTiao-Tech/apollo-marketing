@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @MapperScan(basePackageClasses = TradeMapper.class)
-public class ClickHouseConfig {
+public class ClickHouseAutoConfiguration {
 
     @Autowired
     private MybatisProperties properties;
