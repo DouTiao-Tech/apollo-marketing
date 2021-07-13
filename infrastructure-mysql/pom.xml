@@ -20,6 +20,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.doutiaotech.apollo</groupId>
+            <artifactId>apollo-util</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -24,6 +24,10 @@
             <groupId>com.doutiaotech.apollo</groupId>
             <artifactId>infrastructure-mysql</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.doutiaotech.apollo</groupId>
+            <artifactId>apollo-util</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

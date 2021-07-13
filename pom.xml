@@ -86,12 +86,12 @@
             <!-- all module -->
             <dependency>
                 <groupId>com.doutiaotech.apollo</groupId>
-                <artifactId>external-dy-api</artifactId>
+                <artifactId>apollo-util</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.doutiaotech.apollo</groupId>
-                <artifactId>apollo-util</artifactId>
+                <artifactId>external-dy-api</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -131,13 +131,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.doutiaotech.apollo</groupId>
-            <artifactId>apollo-util</artifactId>
-        </dependency>
-    </dependencies>
 
     <build>
         <pluginManagement>
