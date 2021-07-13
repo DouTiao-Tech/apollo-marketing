@@ -1,4 +1,4 @@
-package com.doutiaotech.apollo.infrastructure.clickhouse.model;
+package com.doutiaotech.apollo.infrastructure.clickhouse.model.shop;
 
 import com.doutiaotech.apollo.infrastructure.clickhouse.model.shop.ConfirmStats;
 import com.doutiaotech.apollo.infrastructure.clickhouse.model.shop.ConsignStats;

@@ -15,7 +15,6 @@ public enum SyncerType {
      */
     FETCH_TRADE(LocalDateTime.class);
 
-
     /**
      * @see SyncItem#getProgress()
      */

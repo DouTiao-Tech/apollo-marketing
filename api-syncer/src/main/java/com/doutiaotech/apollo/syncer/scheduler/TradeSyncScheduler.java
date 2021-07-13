@@ -1,5 +1,6 @@
 package com.doutiaotech.apollo.syncer.scheduler;
 
+import com.doutiaotech.apollo.external.dy.api.OrderApi;
 import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncerType;
@@ -19,6 +20,9 @@ public class TradeSyncScheduler {
     private SyncItemDao syncItemDao;
 
     @Autowired
+    private OrderApi orderApi;
+
+    @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
     @Scheduled(fixedDelay = 1000)
@@ -26,6 +30,19 @@ public class TradeSyncScheduler {
         List<SyncItem> syncItems = syncItemDao.findByTypeAndStop(SyncerType.FETCH_TRADE, false);
         log.info("fetch trade and send to kafka");
         kafkaTemplate.send("trade", "json data");
+    }
+
+    class TradeSyncTask implements Runnable {
+        SyncItem syncItem;
+
+        TradeSyncTask(SyncItem syncItem) {
+            this.syncItem = syncItem;
+        }
+
+        @Override
+        public void run() {
+
+        }
     }
 
 }

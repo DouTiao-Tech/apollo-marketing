@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.doutiaotech.apollo.infrastructure.clickhouse.mapper.TradeMapper">
 
-    <select id="findById" resultType="com.doutiaotech.apollo.infrastructure.clickhouse.model.Trade">
+    <select id="findById" resultType="com.doutiaotech.apollo.infrastructure.clickhouse.model.trade.Trade">
         select * from trade where id=#{id}
     </select>
 </mapper>

@@ -20,12 +20,24 @@ public class SyncItem {
 
     private SyncerType type;
 
+    /**
+     * 是否停止同步
+     */
     private boolean stop;
 
+    /**
+     * 当前同步进度
+     */
     private String progress;
 
+    /**
+     * 首次同步起始时间
+     */
     private String start;
 
+    /**
+     * 同步终止时间
+     */
     private String end;
 
 }
