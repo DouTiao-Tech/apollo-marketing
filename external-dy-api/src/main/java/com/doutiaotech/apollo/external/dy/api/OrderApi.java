@@ -1,5 +1,9 @@
 package com.doutiaotech.apollo.external.dy.api;
 
+import com.doutiaotech.apollo.external.dy.request.CommonRequest;
+import com.doutiaotech.apollo.external.dy.request.TradeSearch;
+import com.doutiaotech.apollo.external.dy.response.Response;
+import com.doutiaotech.apollo.external.dy.response.TradeSearchPage;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -10,6 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface OrderApi {
 
     @GetMapping("/order/searchList")
-    void searchList();
+    Response<TradeSearchPage> searchList(CommonRequest<TradeSearch> request);
 
 }

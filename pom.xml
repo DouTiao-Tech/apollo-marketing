@@ -24,7 +24,7 @@
 
     <modules>
         <!-- basic module -->
-        <module>apollo-core</module>
+        <module>apollo-util</module>
         <module>infrastructure-mysql</module>
         <module>infrastructure-clickhouse</module>
         <module>external-dy-api</module>
@@ -91,7 +91,7 @@
             </dependency>
             <dependency>
                 <groupId>com.doutiaotech.apollo</groupId>
-                <artifactId>apollo-core</artifactId>
+                <artifactId>apollo-util</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -133,33 +133,9 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- common dependency -->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <!-- test dependency -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
+            <groupId>com.doutiaotech.apollo</groupId>
+            <artifactId>apollo-util</artifactId>
         </dependency>
     </dependencies>
 

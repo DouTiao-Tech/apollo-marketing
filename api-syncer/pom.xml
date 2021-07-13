@@ -23,6 +23,10 @@
             <groupId>com.doutiaotech.apollo</groupId>
             <artifactId>external-dy-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.doutiaotech.apollo</groupId>
+            <artifactId>infrastructure-mysql</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

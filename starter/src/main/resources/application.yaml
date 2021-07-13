@@ -5,7 +5,23 @@ spring:
     include:
       - mysql
       - clickhouse
-      - web
+  kafka:
+    producer:
+      acks: all
+      retries: 3
+      properties:
+        enable:
+          idempotence: true
+  mvc:
+    format:
+      date: yyyy-MM-dd
+      date-time: yyyy-MM-dd HH:mm:ss
+      time: HH:mm:ss
+  jackson:
+    mapper:
+      PROPAGATE_TRANSIENT_MARKER: true
+    parser:
+      IGNORE_UNDEFINED: true
 logging:
   group:
     apollo: com.doutiaotech.apollo
