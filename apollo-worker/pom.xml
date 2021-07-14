@@ -20,6 +20,14 @@
             <groupId>com.doutiaotech.apollo</groupId>
             <artifactId>apollo-util</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.doutiaotech.apollo</groupId>
+            <artifactId>infrastructure-clickhouse</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.doutiaotech.apollo</groupId>
+            <artifactId>infrastructure-mysql</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

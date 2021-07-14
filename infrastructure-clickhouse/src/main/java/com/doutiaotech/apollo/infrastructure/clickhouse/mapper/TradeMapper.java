@@ -5,5 +5,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface TradeMapper {
-    Trade findById(Long id);
+    Trade findById(Long orderId);
 }

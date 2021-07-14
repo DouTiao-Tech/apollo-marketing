@@ -23,14 +23,3 @@ spring:
       PROPAGATE_TRANSIENT_MARKER: true
     parser:
       IGNORE_UNDEFINED: true
-logging:
-  group:
-    apollo: com.doutiaotech.apollo
-  level:
-    root: info
-    sql: debug
-    web: debug
-    apollo: debug
-
-  file:
-    path: ./.logs

@@ -5,6 +5,6 @@
 <mapper namespace="com.doutiaotech.apollo.infrastructure.clickhouse.mapper.TradeMapper">
 
     <select id="findById" resultType="com.doutiaotech.apollo.infrastructure.clickhouse.model.trade.Trade">
-        select * from trade where id=#{id}
+        select * from trade where order_id=#{orderId}
     </select>
 </mapper>
