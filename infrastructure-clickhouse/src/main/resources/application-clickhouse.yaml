@@ -4,5 +4,6 @@ clickhouse:
     driverClassName: ru.yandex.clickhouse.ClickHouseDriver
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-#  configuration:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 #    map-underscore-to-camel-case: true

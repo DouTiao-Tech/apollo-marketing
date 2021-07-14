@@ -1,12 +1,12 @@
-package com.doutiao.apollo.sms;
+package com.doutiaotech.apollo.sms;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import com.doutiao.apollo.sms.domain.Sms;
-import com.doutiao.apollo.sms.sender.CompositeSender;
+import com.doutiaotech.apollo.sms.domain.Sms;
+import com.doutiaotech.apollo.sms.sender.CompositeSender;
 import com.doutiaotech.apollo.infrastructure.mysql.dao.SendRecordDao;
 import com.doutiaotech.apollo.infrastructure.mysql.dao.SmsTemplateDao;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SendRecord;

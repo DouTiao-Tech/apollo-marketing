@@ -1,6 +1,6 @@
-package com.doutiao.apollo.sms.sender;
+package com.doutiaotech.apollo.sms.sender;
 
-import com.doutiao.apollo.sms.domain.Sms;
+import com.doutiaotech.apollo.sms.domain.Sms;
 
 import java.util.List;
 

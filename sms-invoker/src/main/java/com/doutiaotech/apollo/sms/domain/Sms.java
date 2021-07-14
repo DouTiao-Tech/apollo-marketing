@@ -1,4 +1,4 @@
-package com.doutiao.apollo.sms.domain;
+package com.doutiaotech.apollo.sms.domain;
 
 import com.doutiaotech.apollo.infrastructure.mysql.model.SendRecord;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SmsTemplate;
