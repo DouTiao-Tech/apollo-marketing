@@ -21,9 +21,9 @@ public class ClickHouseAutoConfiguration {
     @Autowired
     private MybatisProperties properties;
 
-    @Bean
+    @Bean(destroyMethod = "close")
     @ConfigurationProperties("clickhouse.datasource")
-    public DataSource clickHouseDataSource() {
+    public HikariDataSource clickHouseDataSource() {
         return new HikariDataSource();
     }
 

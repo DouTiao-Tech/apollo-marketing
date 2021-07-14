@@ -20,10 +20,10 @@ import javax.sql.DataSource;
 @EnableJdbcRepositories(jdbcOperationsRef = "mysqlOperations", basePackageClasses = UserDao.class, namedQueriesLocation = "classpath:sql/mysql.properties")
 public class MysqlAutoConfiguration {
 
-    @Bean
     @Primary
+    @Bean(destroyMethod = "close")
     @ConfigurationProperties("mysql.datasource")
-    public DataSource mysqlDatasource() {
+    public HikariDataSource mysqlDatasource() {
         return new HikariDataSource();
     }
 
