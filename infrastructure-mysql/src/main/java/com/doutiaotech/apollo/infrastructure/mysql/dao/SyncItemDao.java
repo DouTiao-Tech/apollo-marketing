@@ -10,7 +10,9 @@ import java.util.List;
 
 public interface SyncItemDao extends CrudRepository<SyncItem, Long> {
 
-    SyncItem findByTypeAndShopId(SyncerType type, Long shopId);
+    SyncItem findByShopIdAndType(Long shopId, SyncerType type);
+
+    List<SyncItem> findByTypeAndStop(SyncerType type, boolean stop);
 
     @Query("select id from sync_item where type=:type and stop=:stop")
     List<Long> findIdByTypeAndStop(@Param("type") SyncerType type, @Param("stop") boolean stop);

@@ -39,5 +39,6 @@ create table if not exists `sync_item`
     progress text        not null,
     start    text        not null,
     end      text        not null,
-    step     bigint      not null
+    step     bigint      not null,
+    unique index uk_sid_type (shop_id, type)
 );

@@ -36,16 +36,16 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
     }
 
     @Override
-    protected Future<?> submitTask(Long syncItemId) {
-        return tradeSyncExecutor.submit(new TradeSyncTask(syncItemId));
+    protected Future<?> submitTask(SyncItem syncItem) {
+        return tradeSyncExecutor.submit(new TradeSyncTask(syncItem));
     }
 
     class TradeSyncTask implements Runnable {
 
         private SyncItem syncItem;
 
-        TradeSyncTask(Long syncItemId) {
-            syncItem = syncItemDao.findById(syncItemId).orElseThrow(AssertionError::new);
+        TradeSyncTask(SyncItem syncItem) {
+            this.syncItem = syncItem;
         }
 
         @Override
