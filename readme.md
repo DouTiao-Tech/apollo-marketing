@@ -4,11 +4,15 @@
 
 # 怎么贡献代码
 
-https://www.zhihu.com/question/39721968/answer/801943406
+![image](https://user-images.githubusercontent.com/19494806/125757641-542fd26b-c18e-4985-a810-af9c0f12054b.png)
+
+原理： https://www.zhihu.com/question/39721968/answer/801943406
 
 # fork仓库落后于原仓库怎么办
 
-https://www.zhihu.com/question/28676261
+![image](https://user-images.githubusercontent.com/19494806/125757733-38d3a414-48e4-4c97-9f7d-156702d79e71.png)
+
+原理： https://www.zhihu.com/question/28676261
 
 # 如何开发
 
