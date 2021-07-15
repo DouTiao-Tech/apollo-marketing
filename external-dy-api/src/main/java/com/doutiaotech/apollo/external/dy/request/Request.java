@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.SneakyThrows;
 
 @Data
-public class CommonRequest<T> {
+public class Request<T> {
 
     /**
      * 必填： 调用的API接口名称

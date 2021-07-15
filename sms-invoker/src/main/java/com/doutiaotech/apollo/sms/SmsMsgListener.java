@@ -1,22 +1,22 @@
 package com.doutiaotech.apollo.sms;
 
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import com.doutiaotech.apollo.sms.domain.Sms;
-import com.doutiaotech.apollo.sms.sender.CompositeSender;
 import com.doutiaotech.apollo.infrastructure.mysql.dao.SendRecordDao;
 import com.doutiaotech.apollo.infrastructure.mysql.dao.SmsTemplateDao;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SendRecord;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SmsTemplate;
+import com.doutiaotech.apollo.sms.domain.Sms;
+import com.doutiaotech.apollo.sms.sender.CompositeSender;
 import com.google.common.collect.Streams;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -32,10 +32,11 @@ public class SmsMsgListener {
     private CompositeSender compositeSender;
 
     @KafkaListener(topics = "sms", groupId = "sms-invoker")
-    public void sendSms(List<Long> sendRecordIds) {
+    public void sendSms(List<Long> sendRecordIds, Acknowledgment ack) {
         log.info("fetch sms record:{} size", sendRecordIds.size());
         Iterable<SendRecord> records = sendRecordDao.findAllById(sendRecordIds);
         batchSend(records);
+        ack.acknowledge();
     }
 
     private void batchSend(Iterable<SendRecord> records) {

@@ -1,6 +1,6 @@
 package com.doutiaotech.apollo.external.dy.api;
 
-import com.doutiaotech.apollo.external.dy.request.CommonRequest;
+import com.doutiaotech.apollo.external.dy.request.Request;
 import com.doutiaotech.apollo.external.dy.request.TradeSearch;
 import com.doutiaotech.apollo.external.dy.response.Response;
 import com.doutiaotech.apollo.external.dy.response.TradeSearchPage;
@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface OrderApi {
 
     @GetMapping("/order/searchList")
-    Response<TradeSearchPage> searchList(CommonRequest<TradeSearch> request);
+    Response<TradeSearchPage> searchList(Request<TradeSearch> request);
 
 }

@@ -18,11 +18,15 @@ public enum SyncerType {
     /**
      * @see SyncItem#getProgress()
      */
-    private Class<?> progressType;
+    private Class<? extends Comparable> progressType;
 
     @SuppressWarnings("unchecked")
-    public <T> T resolveProgress(String json) {
+    public <T extends Comparable> T resolveProgress(String json) {
         return (T) JsonUtils.fromJson(json, progressType);
+    }
+
+    public <T extends Comparable> String toJson(T progress) {
+        return JsonUtils.toJson(progress);
     }
 
 }

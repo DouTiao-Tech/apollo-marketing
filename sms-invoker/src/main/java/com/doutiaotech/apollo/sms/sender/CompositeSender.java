@@ -13,10 +13,10 @@ public class CompositeSender {
     private List<Sender> senders;
 
     public void batchSend(List<Sms> sms) {
-        pickSender().batchSms(sms);
+        selectSender().batchSms(sms);
     }
 
-    private Sender pickSender() {
+    private Sender selectSender() {
         // 分流
         return senders.get(0);
     }

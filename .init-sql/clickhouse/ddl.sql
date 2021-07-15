@@ -2,6 +2,7 @@
 
 create database if not exists apollo;
 
+-- https://op.jinritemai.com/docs/api-docs/15/555
 CREATE TABLE apollo.trade_kafka_consumer
 (
     shop_id                   Int32,

@@ -1,9 +1,0 @@
-clickhouse:
-  datasource:
-    jdbcUrl: jdbc:clickhouse://localhost:8123/apollo
-    driverClassName: ru.yandex.clickhouse.ClickHouseDriver
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
-#    map-underscore-to-camel-case: true

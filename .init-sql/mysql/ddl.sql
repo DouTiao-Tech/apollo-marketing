@@ -38,5 +38,6 @@ create table if not exists `sync_item`
     stop     tinyint     not null,
     progress text        not null,
     start    text        not null,
-    end      text        not null
+    end      text        not null,
+    step     bigint      not null
 );

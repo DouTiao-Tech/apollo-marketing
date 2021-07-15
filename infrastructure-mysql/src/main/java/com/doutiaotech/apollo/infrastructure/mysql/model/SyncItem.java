@@ -27,17 +27,46 @@ public class SyncItem {
 
     /**
      * 当前同步进度
+     *
+     * @see SyncerType
      */
     private String progress;
 
     /**
-     * 首次同步起始时间
+     * 首次同步起始
+     *
+     * @see SyncerType
      */
     private String start;
 
     /**
-     * 同步终止时间
+     * 同步终止
+     *
+     * @see SyncerType
      */
     private String end;
+
+    /**
+     * 同步步长
+     */
+    private long step;
+
+    public boolean isFinish() {
+        Comparable<Object> progress = resolveProgress();
+        Comparable<Object> end = resolveEnd();
+        return progress.compareTo(end) >= 0;
+    }
+
+    public <T extends Comparable> T resolveProgress() {
+        return getType().resolveProgress(getProgress());
+    }
+
+    public <T extends Comparable> T resolveEnd() {
+        return getType().resolveProgress(getEnd());
+    }
+
+    public <T extends Comparable> void updateProgress(T progress) {
+        this.progress = getType().toJson(progress);
+    }
 
 }

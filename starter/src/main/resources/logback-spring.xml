@@ -7,7 +7,7 @@
 
     <appender name="MYSQL-AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %logger{0} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %logger{20} - %msg%n</pattern>
         </encoder>
         <file>${LOG_PATH}/${MYSQL_LOG_FILE}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -19,7 +19,7 @@
     </appender>
     <appender name="CLICKHOUSE-AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %logger{0} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %logger{40} - %msg%n</pattern>
         </encoder>
         <file>${LOG_PATH}/${CLICKHOUSE_LOG_FILE}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -34,7 +34,7 @@
         <logger name="org.springframework.jdbc.core.JdbcTemplate" level="DEBUG"/>
         <logger name="com.doutiaotech.apollo.infrastructure.clickhouse.mapper" level="DEBUG"/>
         <logger name="org.springframework.web.servlet.DispatcherServlet" level="DEBUG"/>
-        <logger name="com.doutiao" level="DEBUG"/>
+        <logger name="com.doutiao.apollo" level="DEBUG"/>
         <root level="INFO">
             <appender-ref ref="FILE"/>
             <appender-ref ref="CONSOLE"/>
