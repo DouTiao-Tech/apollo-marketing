@@ -7,6 +7,7 @@ import lombok.experimental.UtilityClass;
 
 import javax.annotation.Nonnull;
 
+@UtilityClass
 public class JsonUtils {
 
     private static final ObjectMapper mapper = new ObjectMapper();

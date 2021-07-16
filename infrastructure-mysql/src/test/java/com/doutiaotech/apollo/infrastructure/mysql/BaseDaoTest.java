@@ -17,7 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
         classes = MysqlAutoConfiguration.class,
         properties = {
                 "mysql.datasource.jdbcUrl=jdbc:mysql://localhost:33306/apollo",
-                "mysql.datasource.driverClassName=com.mysql.cj.jdbc.Driver"
+                "mysql.datasource.driverClassName=com.mysql.cj.jdbc.Driver",
+                "spring.main.banner-mode=off"
         }
 )
 @Transactional
