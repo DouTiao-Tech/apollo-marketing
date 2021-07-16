@@ -18,7 +18,7 @@ public class SyncItem {
      */
     private Long shopId;
 
-    private SyncerType type;
+    private SyncType type;
 
     /**
      * 是否停止同步
@@ -28,21 +28,21 @@ public class SyncItem {
     /**
      * 当前同步进度
      *
-     * @see SyncerType
+     * @see SyncType
      */
     private String progress;
 
     /**
      * 首次同步起始
      *
-     * @see SyncerType
+     * @see SyncType
      */
     private String start;
 
     /**
      * 同步终止
      *
-     * @see SyncerType
+     * @see SyncType
      */
     private String end;
 

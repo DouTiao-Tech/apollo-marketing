@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public enum SyncerType {
+public enum SyncType {
 
     /**
      * 抓取订单

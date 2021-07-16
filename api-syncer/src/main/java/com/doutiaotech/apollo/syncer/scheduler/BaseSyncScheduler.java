@@ -3,7 +3,7 @@ package com.doutiaotech.apollo.syncer.scheduler;
 import com.doutiaotech.apollo.core.concurrent.FutureTaskRegistry;
 import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
-import com.doutiaotech.apollo.infrastructure.mysql.model.SyncerType;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SyncType;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,7 +19,7 @@ public abstract class BaseSyncScheduler {
     @Autowired
     protected SyncItemDao syncItemDao;
 
-    private FutureTaskRegistry<Long> registry = new FutureTaskRegistry<>();
+    protected FutureTaskRegistry<Long> registry = new FutureTaskRegistry<>();
 
     @SneakyThrows
     @Scheduled(fixedDelay = 1000)
@@ -36,6 +36,6 @@ public abstract class BaseSyncScheduler {
 
     protected abstract Future<?> submitTask(SyncItem syncItem);
 
-    protected abstract SyncerType supportType();
+    protected abstract SyncType supportType();
 
 }

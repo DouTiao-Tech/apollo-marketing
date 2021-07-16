@@ -25,6 +25,13 @@ spring:
       PROPAGATE_TRANSIENT_MARKER: true
     parser:
       IGNORE_UNDEFINED: true
+  task:
+    scheduling:
+      pool:
+        size: 2
+      shutdown:
+        await-termination: true
+
 server:
   port: 8888
 

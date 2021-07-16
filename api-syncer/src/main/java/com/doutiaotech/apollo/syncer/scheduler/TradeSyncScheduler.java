@@ -1,14 +1,16 @@
 package com.doutiaotech.apollo.syncer.scheduler;
 
 import com.doutiaotech.apollo.core.utils.DateTimeUtils;
+import com.doutiaotech.apollo.core.utils.JsonUtils;
 import com.doutiaotech.apollo.external.dy.api.OrderApi;
 import com.doutiaotech.apollo.external.dy.request.Request;
 import com.doutiaotech.apollo.external.dy.request.TradeSearch;
 import com.doutiaotech.apollo.external.dy.response.Response;
 import com.doutiaotech.apollo.external.dy.response.TradeSearchPage;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
-import com.doutiaotech.apollo.infrastructure.mysql.model.SyncerType;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SyncType;
 import lombok.extern.slf4j.Slf4j;
+import org.jooq.lambda.Unchecked;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -16,10 +18,13 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
 public class TradeSyncScheduler extends BaseSyncScheduler {
+
+    public static final String TRADE_TOPIC = "trade";
 
     @Autowired
     private OrderApi orderApi;
@@ -31,8 +36,8 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
     private ExecutorService tradeSyncExecutor;
 
     @Override
-    protected SyncerType supportType() {
-        return SyncerType.FETCH_TRADE;
+    protected SyncType supportType() {
+        return SyncType.FETCH_TRADE;
     }
 
     @Override
@@ -52,19 +57,28 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
         public void run() {
             LocalDateTime progress = syncItem.resolveProgress();
             LocalDateTime end = syncItem.resolveEnd();
+            log.info("start sync trade for user#{} between {} and {}", syncItem.getShopId(), progress, end);
             long updateTimeStart = DateTimeUtils.toTimestamp(progress);
             long updateTimeEnd = DateTimeUtils.toTimestamp(end);
-            while (!syncItem.isFinish()) {
-                Request<TradeSearch> request = buildRequest(updateTimeStart, updateTimeEnd);
-                Response<TradeSearchPage> response = orderApi.searchList(request);
-                progressResponse(response);
-                if (response.getData().getSize() == 0) {
-                    updateTimeStart = updateTimeEnd;
-                } else {
-                    updateTimeStart = nextUpdateTimeStart(response);
+            try {
+                while (!syncItem.isFinish()) {
+                    Request<TradeSearch> request = buildRequest(updateTimeStart, updateTimeEnd);
+                    Response<TradeSearchPage> response = orderApi.searchList(request);
+                    progressResponse(response);
+                    int size = response.getData().getShop_order_list().size();
+                    if (log.isDebugEnabled()) {
+                        log.debug("sync {} trade to kafka for user#{} between {} and {}",
+                                size, syncItem.getShopId(),
+                                DateTimeUtils.longToDateTime(updateTimeStart),
+                                DateTimeUtils.longToDateTime(updateTimeEnd)
+                        );
+                    }
+                    updateTimeStart = size == 0 ? updateTimeEnd : nextUpdateTimeStart(response);
+                    syncItem.updateProgress(DateTimeUtils.longToDateTime(updateTimeEnd));
+                    syncItemDao.save(syncItem);
                 }
-                syncItem.updateProgress(DateTimeUtils.longToDateTime(updateTimeEnd));
-                syncItemDao.save(syncItem);
+            } catch (Exception e) {
+                log.error("sync trade error, syncItem:" + syncItem, e);
             }
         }
 
@@ -75,8 +89,10 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
         }
 
         private void progressResponse(Response<TradeSearchPage> response) {
-            // TODO: response to json
-            kafkaTemplate.send("trade", "json data");
+            TradeSearchPage data = response.getData();
+            data.getShop_order_list().stream().map(order -> kafkaTemplate.send(TRADE_TOPIC, JsonUtils.toJson(order)))
+                    .collect(Collectors.toList())
+                    .forEach(Unchecked.consumer(Future::get));
         }
 
         private Request<TradeSearch> buildRequest(long updateTimeStart, long updateTimeEnd) {
