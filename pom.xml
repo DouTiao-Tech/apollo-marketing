@@ -14,6 +14,7 @@
         <target.version>1.8</target.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <fontend-maven-plugin.version>1.9.1</fontend-maven-plugin.version>
+        <jococo-maven-plugin.version>0.8.7</jococo-maven-plugin.version>
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
         <dubbo.version>3.0.1</dubbo.version>
@@ -156,6 +157,11 @@
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>${fontend-maven-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jococo-maven-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -170,6 +176,24 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

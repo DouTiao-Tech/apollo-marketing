@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 
-public class DateTimeUtilsTests {
+public class DateTimeUtilsTest {
 
     @Test
     public void test_toTimestamp() {

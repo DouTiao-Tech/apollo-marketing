@@ -3,6 +3,7 @@ package com.doutiaotech.apollo.infrastructure.mysql.model;
 import com.doutiaotech.apollo.core.utils.JsonUtils;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
@@ -21,11 +22,11 @@ public enum SyncType {
     private Class<? extends Comparable> progressType;
 
     @SuppressWarnings("unchecked")
-    public <T extends Comparable> T resolveProgress(String json) {
+    public <T extends Comparable> T resolveProgress(@NonNull String json) {
         return (T) JsonUtils.fromJson(json, progressType);
     }
 
-    public <T extends Comparable> String toJson(T progress) {
+    public <T extends Comparable> String toJson(@NonNull T progress) {
         return JsonUtils.toJson(progress);
     }
 
