@@ -1,0 +1,1 @@
+../../../../.init-sql/mysql/ddl.sql

@@ -1,6 +1,4 @@
-create database apollo character set = utf8mb4;
-
-grant all on apollo.* to apollo;
+create database if not exists apollo character set = utf8mb4;
 
 use apollo;
 
@@ -35,7 +33,7 @@ create table if not exists `sync_item`
     version  bigint      not null,
     shop_id  bigint      not null,
     type     varchar(32) not null,
-    stop     tinyint     not null,
+    stop     bit         not null,
     progress text        not null,
     start    text        not null,
     end      text        not null,

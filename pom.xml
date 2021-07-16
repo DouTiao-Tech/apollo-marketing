@@ -22,6 +22,7 @@
         <jool-java.version>0.9.14</jool-java.version>
         <mybatis-spring-boot.version>2.2.0</mybatis-spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mariadb4j.version>2.4.0</mariadb4j.version>
     </properties>
 
     <modules>
@@ -89,6 +90,13 @@
                 <artifactId>clickhouse-jdbc</artifactId>
                 <version>0.3.1</version>
             </dependency>
+
+            <dependency>
+                <groupId>ch.vorburger.mariaDB4j</groupId>
+                <artifactId>mariaDB4j-springboot</artifactId>
+                <version>${mariadb4j.version}</version>
+            </dependency>
+
 
             <!-- all module -->
             <dependency>
@@ -161,6 +169,11 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jococo-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>ch.vorburger.mariaDB4j</groupId>
+                    <artifactId>mariaDB4j-maven-plugin</artifactId>
+                    <version>${mariadb4j.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

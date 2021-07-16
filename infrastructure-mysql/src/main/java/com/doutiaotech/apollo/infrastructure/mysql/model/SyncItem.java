@@ -23,7 +23,7 @@ public class SyncItem {
     /**
      * 是否停止同步
      */
-    private boolean stop;
+    private Boolean stop;
 
     /**
      * 当前同步进度
@@ -49,7 +49,7 @@ public class SyncItem {
     /**
      * 同步步长
      */
-    private long step;
+    private Long step;
 
     public boolean isFinish() {
         Comparable<Object> progress = resolveProgress();

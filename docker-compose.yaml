@@ -26,6 +26,7 @@ services:
       - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=xudjf23adj213
+      - MYSQL_DATABASE=apollo
       - MYSQL_USER=apollo
       - MYSQL_PASSWORD=apollo-passwd
     volumes:
