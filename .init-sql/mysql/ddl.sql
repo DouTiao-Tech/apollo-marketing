@@ -1,7 +1,3 @@
-create database if not exists apollo character set = utf8mb4;
-
-use apollo;
-
 create table if not exists `user`
 (
     id            bigint primary key auto_increment,

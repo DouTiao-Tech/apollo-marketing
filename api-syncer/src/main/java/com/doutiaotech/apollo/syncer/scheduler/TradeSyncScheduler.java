@@ -67,11 +67,9 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
                     progressResponse(response);
                     int size = response.getData().getShop_order_list().size();
                     if (log.isDebugEnabled()) {
-                        log.debug("sync {} trade to kafka for user#{} between {} and {}",
-                                size, syncItem.getShopId(),
+                        log.debug("sync {} trade to kafka for user#{} between {} and {}", size, syncItem.getShopId(),
                                 DateTimeUtils.longToDateTime(updateTimeStart),
-                                DateTimeUtils.longToDateTime(updateTimeEnd)
-                        );
+                                DateTimeUtils.longToDateTime(updateTimeEnd));
                     }
                     updateTimeStart = size == 0 ? updateTimeEnd : nextUpdateTimeStart(response);
                     syncItem.updateProgress(DateTimeUtils.longToDateTime(updateTimeEnd));
@@ -84,19 +82,19 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
 
         private long nextUpdateTimeStart(Response<TradeSearchPage> response) {
             return response.getData().getShop_order_list().stream()
-                    .mapToLong(TradeSearchPage.ShopOrderListBean::getUpdate_time)
-                    .max().orElseThrow(AssertionError::new);
+                    .mapToLong(TradeSearchPage.ShopOrderListBean::getUpdate_time).max()
+                    .orElseThrow(AssertionError::new);
         }
 
         private void progressResponse(Response<TradeSearchPage> response) {
             TradeSearchPage data = response.getData();
             data.getShop_order_list().stream().map(order -> kafkaTemplate.send(TRADE_TOPIC, JsonUtils.toJson(order)))
-                    .collect(Collectors.toList())
-                    .forEach(Unchecked.consumer(Future::get));
+                    .collect(Collectors.toList()).forEach(Unchecked.consumer(Future::get));
         }
 
         private Request<TradeSearch> buildRequest(long updateTimeStart, long updateTimeEnd) {
             Request<TradeSearch> request = new Request<>();
+            // TODO: common request params
             TradeSearch search = new TradeSearch();
             search.setUpdate_time_start(updateTimeStart);
             search.setUpdate_time_end(updateTimeEnd);

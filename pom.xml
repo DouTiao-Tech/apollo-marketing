@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.doutiaotech.apollo</groupId>
@@ -23,6 +22,8 @@
         <mybatis-spring-boot.version>2.2.0</mybatis-spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mariadb4j.version>2.4.0</mariadb4j.version>
+        <testcontainers.version>1.15.1</testcontainers.version>
+        <testcontainers-spring-boot.version>2.0.10</testcontainers-spring-boot.version>
     </properties>
 
     <modules>
@@ -71,6 +72,20 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.playtika.testcontainers</groupId>
+                <artifactId>testcontainers-spring-boot-bom</artifactId>
+                <version>${testcontainers-spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <!-- commons -->
             <dependency>
@@ -95,6 +110,7 @@
                 <groupId>ch.vorburger.mariaDB4j</groupId>
                 <artifactId>mariaDB4j-springboot</artifactId>
                 <version>${mariadb4j.version}</version>
+                <scope>test</scope>
             </dependency>
 
 

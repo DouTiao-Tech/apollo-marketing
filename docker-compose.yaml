@@ -31,9 +31,10 @@ services:
       - MYSQL_PASSWORD=apollo-passwd
     volumes:
       - ./.init-sql/mysql:/docker-entrypoint-initdb.d
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
   #      - ./.data/mysql:/var/lib/mysql
   clickhouse-server:
-    image: yandex/clickhouse-server
+    image: yandex/clickhouse-server:21.7.3.14
     ports:
       - 8123:8123 # http interface
       - 9000:9000 # native client
