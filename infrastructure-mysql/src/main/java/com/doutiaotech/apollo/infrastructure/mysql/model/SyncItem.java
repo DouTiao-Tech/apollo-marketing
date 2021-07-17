@@ -57,15 +57,15 @@ public class SyncItem {
         return progress.compareTo(end) >= 0;
     }
 
-    public <T extends Comparable> T resolveProgress() {
+    public <T extends Comparable<?>> T resolveProgress() {
         return getType().resolveProgress(getProgress());
     }
 
-    public <T extends Comparable> T resolveEnd() {
+    public <T extends Comparable<?>> T resolveEnd() {
         return getType().resolveProgress(getEnd());
     }
 
-    public <T extends Comparable> void updateProgress(T progress) {
+    public <T extends Comparable<?>> void updateProgress(T progress) {
         this.progress = getType().toJson(progress);
     }
 

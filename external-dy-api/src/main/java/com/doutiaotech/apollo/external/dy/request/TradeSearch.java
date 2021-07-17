@@ -73,6 +73,7 @@ public class TradeSearch {
      */
     private List<Status> combine_status;
 
+    @Data
     public static class Status {
         /**
          * 描述：订单状态，","分隔多个状态

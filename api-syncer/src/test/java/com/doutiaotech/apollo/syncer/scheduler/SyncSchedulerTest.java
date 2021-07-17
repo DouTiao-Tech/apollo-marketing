@@ -1,29 +1,29 @@
 package com.doutiaotech.apollo.syncer.scheduler;
 
-import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
-import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
-import com.doutiaotech.apollo.infrastructure.mysql.model.SyncType;
-import com.google.common.util.concurrent.MoreExecutors;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.stereotype.Component;
-import org.springframework.test.context.junit4.SpringRunner;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
+import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SyncType;
+import com.google.common.util.concurrent.MoreExecutors;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.stereotype.Component;
+import org.springframework.test.context.junit4.SpringRunner;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(
-        classes = SyncSchedulerTest.TestSyncScheduler.class,
-        properties = "spring.main.banner-mode=off"
-)
+@SpringBootTest(classes = SyncSchedulerTest.TestSyncScheduler.class, properties = "spring.main.banner-mode=off")
 public class SyncSchedulerTest {
 
     private static final SyncType testSyncType = SyncType.FETCH_TRADE;
@@ -39,12 +39,12 @@ public class SyncSchedulerTest {
 
     @Test
     public void test_syncScheduler() {
-        Mockito.when(syncItemDao.findByTypeAndStop(testSyncType, false))
+        when(syncItemDao.findByTypeAndStop(testSyncType, false))
                 .thenReturn(Collections.singletonList(buildSyncItem()));
         testSyncScheduler.value = 1L;
         testSyncScheduler.result = 2L;
         testSyncScheduler.schedule();
-        Assert.assertEquals(2L, testSyncScheduler.value);
+        assertThat(testSyncScheduler.value, is(2L));
     }
 
     private SyncItem buildSyncItem() {
@@ -57,7 +57,6 @@ public class SyncSchedulerTest {
         syncItem.setEnd(testSyncType.toJson(end));
         return syncItem;
     }
-
 
     @Component
     static class TestSyncScheduler extends BaseSyncScheduler {

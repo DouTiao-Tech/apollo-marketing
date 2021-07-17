@@ -36,7 +36,7 @@ public class FutureTaskRegistryTest {
         }
     }
 
-    private abstract class FutureAdapter implements Future {
+    private abstract class FutureAdapter implements Future<Object> {
 
         @Override
         public boolean cancel(boolean b) {

@@ -1,12 +1,8 @@
 package com.doutiaotech.apollo.infrastructure.clickhouse.model.shop;
 
-import com.doutiaotech.apollo.infrastructure.clickhouse.model.shop.ConfirmStats;
-import com.doutiaotech.apollo.infrastructure.clickhouse.model.shop.ConsignStats;
-import com.doutiaotech.apollo.infrastructure.clickhouse.model.shop.CreateStats;
-import com.doutiaotech.apollo.infrastructure.clickhouse.model.shop.PayStats;
-import lombok.Data;
-
 import java.time.LocalDate;
+
+import lombok.Data;
 
 @Data
 public class ShopDailyStats {
