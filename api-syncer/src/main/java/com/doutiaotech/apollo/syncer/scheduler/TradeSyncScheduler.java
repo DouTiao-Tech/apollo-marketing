@@ -63,20 +63,19 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
             long updateTimeStart = DateTimeUtils.toTimestamp(progress);
             long updateTimeEnd = DateTimeUtils.toTimestamp(end);
             try {
+                long sizeSum = 0;
                 while (!syncItem.isFinish()) {
                     Request<TradeSearch> request = buildRequest(updateTimeStart, updateTimeEnd);
                     Response<TradeSearchPage> response = orderApi.searchList(request);
                     progressResponse(response);
                     int size = response.getData().getShop_order_list().size();
-                    if (log.isDebugEnabled()) {
-                        log.debug("sync {} trade to kafka for user#{} between {} and {}", size, syncItem.getShopId(),
-                                DateTimeUtils.longToDateTime(updateTimeStart),
-                                DateTimeUtils.longToDateTime(updateTimeEnd));
-                    }
+                    sizeSum += size;
                     updateTimeStart = size == 0 ? updateTimeEnd : nextUpdateTimeStart(response);
                     syncItem.updateProgress(DateTimeUtils.longToDateTime(updateTimeStart));
                     syncItem = syncItemDao.save(syncItem);
                 }
+                log.info("sync {} trade to kafka for user#{} between {} and {}", sizeSum, syncItem.getShopId(),
+                        DateTimeUtils.longToDateTime(updateTimeStart), DateTimeUtils.longToDateTime(updateTimeEnd));
             } catch (Exception e) {
                 log.error("sync trade error, syncItem:" + syncItem, e);
             }

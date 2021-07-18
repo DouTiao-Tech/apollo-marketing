@@ -28,6 +28,7 @@ import com.doutiaotech.apollo.syncer.scheduler.TradeSyncScheduler.TradeSyncTask;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -67,14 +68,14 @@ public class TradeSyncSchedulerTest {
     public void testTradeSyncTask() {
         when(syncItemDao.save(any(SyncItem.class))).thenAnswer((invoke) -> invoke.getArgument(0));
 
-        when(orderApi.searchList(any())).thenReturn(mockResponse(1L, LocalDateTime.of(2020, 1, 15, 1, 1, 1)),
-                mockResponse(2L, LocalDateTime.of(2020, 2, 1, 1, 1, 1)),
-                mockResponse(3L, LocalDateTime.of(2020, 3, 1, 1, 1, 1)));
+        when(orderApi.searchList(any())).thenReturn(
+                mockResponse(mockShopOrder(1L, LocalDateTime.of(2020, 1, 15, 1, 1, 1))),
+                mockResponse(mockShopOrder(2L, LocalDateTime.of(2020, 2, 1, 1, 1, 1))),
+                mockResponse(mockShopOrder(3L, LocalDateTime.of(2020, 2, 15, 1, 1, 1))), mockResponse(null));
 
         ListenableFuture<SendResult<String, String>> mockResult = mock(ListenableFuture.class);
         doReturn(new SendResult<>(null, null)).when(mockResult).get();
-        when(kafkaTemplate.send(eq(TRADE_TOPIC), anyString(), anyString())).thenReturn(mockResult)
-                .thenReturn(mockResult).thenReturn(mockResult);
+        when(kafkaTemplate.send(eq(TRADE_TOPIC), anyString(), anyString())).thenReturn(mockResult);
 
         TradeSyncTask task = tradeSyncScheduler.new TradeSyncTask(mockSyncItem());
         task.run();
@@ -85,17 +86,15 @@ public class TradeSyncSchedulerTest {
         inOrder.verify(kafkaTemplate).send(TRADE_TOPIC, Long.toString(2L),
                 JsonUtils.toJson(mockShopOrder(2L, LocalDateTime.of(2020, 2, 1, 1, 1, 1))));
         inOrder.verify(kafkaTemplate).send(TRADE_TOPIC, Long.toString(3L),
-                JsonUtils.toJson(mockShopOrder(3L, LocalDateTime.of(2020, 3, 1, 1, 1, 1))));
+                JsonUtils.toJson(mockShopOrder(3L, LocalDateTime.of(2020, 2, 15, 1, 1, 1))));
 
         assertEquals(task.syncItem.getProgress(), task.syncItem.getEnd());
-
     }
 
-    private Response<TradeSearchPage> mockResponse(long orderId, LocalDateTime updateTime) {
+    private Response<TradeSearchPage> mockResponse(ShopOrderListBean bean) {
         Response<TradeSearchPage> response = new Response<>();
         TradeSearchPage page = new TradeSearchPage();
-        ShopOrderListBean bean = mockShopOrder(orderId, updateTime);
-        page.setShop_order_list(Collections.singletonList(bean));
+        page.setShop_order_list(bean == null ? Collections.emptyList() : Collections.singletonList(bean));
         response.setData(page);
         return response;
     }
