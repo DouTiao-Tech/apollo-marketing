@@ -24,3 +24,8 @@
     ```
    > 如果修改了`.init-sql`中的ddl表结构，注意重启docker容器
 2. 启动应用，不同环境下添加`-Dspring.profiles.active=dev`参数，目前支持`dev`、`prod`两个环境
+
+# 如何单元测试
+
+Hamcrest: https://dzone.com/articles/hamcrest-vs-assertj-assertion-frameworks-which-one
+Mocktio: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html

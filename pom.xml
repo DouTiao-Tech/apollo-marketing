@@ -14,14 +14,14 @@
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <fontend-maven-plugin.version>1.9.1</fontend-maven-plugin.version>
         <jococo-maven-plugin.version>0.8.7</jococo-maven-plugin.version>
-        <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
-        <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+        <spring-boot.version>2.5.2</spring-boot.version>
+        <spring-cloud.version>2020.0.3</spring-cloud.version>
         <dubbo.version>3.0.1</dubbo.version>
         <guava.version>30.1.1-jre</guava.version>
         <jool-java.version>0.9.14</jool-java.version>
         <mybatis-spring-boot.version>2.2.0</mybatis-spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mariadb4j.version>2.4.0</mariadb4j.version>
+        <clickhouse-jdbc.version>0.3.1</clickhouse-jdbc.version>
         <testcontainers.version>1.15.1</testcontainers.version>
         <testcontainers-spring-boot.version>2.0.10</testcontainers-spring-boot.version>
     </properties>
@@ -103,16 +103,8 @@
             <dependency>
                 <groupId>ru.yandex.clickhouse</groupId>
                 <artifactId>clickhouse-jdbc</artifactId>
-                <version>0.3.1</version>
+                <version>${clickhouse-jdbc.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>ch.vorburger.mariaDB4j</groupId>
-                <artifactId>mariaDB4j-springboot</artifactId>
-                <version>${mariadb4j.version}</version>
-                <scope>test</scope>
-            </dependency>
-
 
             <!-- all module -->
             <dependency>
@@ -163,6 +155,24 @@
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <!-- test dependency -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     <build>
         <pluginManagement>
             <plugins>
@@ -185,11 +195,6 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jococo-maven-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>ch.vorburger.mariaDB4j</groupId>
-                    <artifactId>mariaDB4j-maven-plugin</artifactId>
-                    <version>${mariadb4j.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

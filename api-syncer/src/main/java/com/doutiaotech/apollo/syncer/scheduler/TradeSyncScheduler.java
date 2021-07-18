@@ -1,5 +1,10 @@
 package com.doutiaotech.apollo.syncer.scheduler;
 
+import java.time.LocalDateTime;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.stream.Collectors;
+
 import com.doutiaotech.apollo.core.utils.DateTimeUtils;
 import com.doutiaotech.apollo.core.utils.JsonUtils;
 import com.doutiaotech.apollo.external.dy.api.OrderApi;
@@ -9,16 +14,13 @@ import com.doutiaotech.apollo.external.dy.response.Response;
 import com.doutiaotech.apollo.external.dy.response.TradeSearchPage;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncType;
-import lombok.extern.slf4j.Slf4j;
+
 import org.jooq.lambda.Unchecked;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
@@ -47,7 +49,7 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
 
     class TradeSyncTask implements Runnable {
 
-        private SyncItem syncItem;
+        SyncItem syncItem;
 
         TradeSyncTask(SyncItem syncItem) {
             this.syncItem = syncItem;
@@ -72,8 +74,8 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
                                 DateTimeUtils.longToDateTime(updateTimeEnd));
                     }
                     updateTimeStart = size == 0 ? updateTimeEnd : nextUpdateTimeStart(response);
-                    syncItem.updateProgress(DateTimeUtils.longToDateTime(updateTimeEnd));
-                    syncItemDao.save(syncItem);
+                    syncItem.updateProgress(DateTimeUtils.longToDateTime(updateTimeStart));
+                    syncItem = syncItemDao.save(syncItem);
                 }
             } catch (Exception e) {
                 log.error("sync trade error, syncItem:" + syncItem, e);
@@ -88,7 +90,8 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
 
         private void progressResponse(Response<TradeSearchPage> response) {
             TradeSearchPage data = response.getData();
-            data.getShop_order_list().stream().map(order -> kafkaTemplate.send(TRADE_TOPIC, JsonUtils.toJson(order)))
+            data.getShop_order_list().stream()
+                    .map(order -> kafkaTemplate.send(TRADE_TOPIC, order.getOrder_id(), JsonUtils.toJson(order)))
                     .collect(Collectors.toList()).forEach(Unchecked.consumer(Future::get));
         }
 
