@@ -28,7 +28,6 @@ import com.doutiaotech.apollo.syncer.scheduler.TradeSyncScheduler.TradeSyncTask;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
