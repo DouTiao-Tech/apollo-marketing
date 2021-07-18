@@ -29,3 +29,9 @@
 
 Hamcrest: https://dzone.com/articles/hamcrest-vs-assertj-assertion-frameworks-which-one
 Mocktio: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html
+
+写完单元测试后，可以跑一遍，看一看测试覆盖率
+```sh
+mvn clean test
+```
+每个项目模块的`target/site/jacoco/index.html`有响应的测试报告
