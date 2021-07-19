@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/DouTiao-Tech/apollo-marketing/branch/master/graph/badge.svg?token=UNKZNBbqng)](https://codecov.io/gh/DouTiao-Tech/apollo-marketing)
+
 # architecture
 
 ![architecture](./.doc/apollo.svg)
