@@ -13,7 +13,7 @@ import com.doutiaotech.apollo.external.dy.request.TradeSearch;
 import com.doutiaotech.apollo.external.dy.response.Response;
 import com.doutiaotech.apollo.external.dy.response.TradeSearchPage;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
-import com.doutiaotech.apollo.infrastructure.mysql.model.SyncType;
+import com.doutiaotech.apollo.infrastructure.mysql.enums.SyncType;
 
 import org.jooq.lambda.Unchecked;
 import org.springframework.beans.factory.annotation.Autowired;

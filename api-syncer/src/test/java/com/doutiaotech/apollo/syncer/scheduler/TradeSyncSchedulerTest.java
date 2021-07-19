@@ -8,7 +8,7 @@ import com.doutiaotech.apollo.external.dy.response.TradeSearchPage;
 import com.doutiaotech.apollo.external.dy.response.TradeSearchPage.ShopOrderListBean;
 import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
-import com.doutiaotech.apollo.infrastructure.mysql.model.SyncType;
+import com.doutiaotech.apollo.infrastructure.mysql.enums.SyncType;
 import com.doutiaotech.apollo.syncer.scheduler.TradeSyncScheduler.TradeSyncTask;
 import lombok.SneakyThrows;
 import org.junit.Test;

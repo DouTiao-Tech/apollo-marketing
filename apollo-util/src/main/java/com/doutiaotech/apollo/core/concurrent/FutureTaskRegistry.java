@@ -23,6 +23,11 @@ public class FutureTaskRegistry<K> {
                 .collect(Collectors.toList());
     }
 
+    public boolean isRunning(K key) {
+        Future<?> future = registry.get(key);
+        return future != null && !future.isDone();
+    }
+
     private void purgeDone() {
         registry.values().removeIf(Future::isDone);
     }

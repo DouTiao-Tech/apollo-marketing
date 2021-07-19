@@ -1,5 +1,6 @@
 package com.doutiaotech.apollo.infrastructure.mysql.model;
 
+import com.doutiaotech.apollo.infrastructure.mysql.enums.SyncType;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;

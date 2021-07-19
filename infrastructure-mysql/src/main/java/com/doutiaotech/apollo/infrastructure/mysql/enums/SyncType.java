@@ -1,6 +1,7 @@
-package com.doutiaotech.apollo.infrastructure.mysql.model;
+package com.doutiaotech.apollo.infrastructure.mysql.enums;
 
 import com.doutiaotech.apollo.core.utils.JsonUtils;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;

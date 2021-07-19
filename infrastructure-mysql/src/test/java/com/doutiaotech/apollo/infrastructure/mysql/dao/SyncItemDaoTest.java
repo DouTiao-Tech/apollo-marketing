@@ -2,7 +2,7 @@ package com.doutiaotech.apollo.infrastructure.mysql.dao;
 
 import com.doutiaotech.apollo.infrastructure.mysql.BaseDaoTest;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
-import com.doutiaotech.apollo.infrastructure.mysql.model.SyncType;
+import com.doutiaotech.apollo.infrastructure.mysql.enums.SyncType;
 
 import org.junit.Assert;
 import org.junit.Test;

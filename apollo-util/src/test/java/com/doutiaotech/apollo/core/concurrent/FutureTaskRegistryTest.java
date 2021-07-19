@@ -19,6 +19,7 @@ public class FutureTaskRegistryTest {
         registry.register(2L, new DoneFuture());
         List<Long> longs = registry.purgeDoneAndRejectRunning(Arrays.asList(1L, 2L, 3L));
         Assert.assertArrayEquals(longs.toArray(), Arrays.asList(2L, 3L).toArray());
+        Assert.assertFalse(registry.isRunning(2L));
     }
 
     private class RunningFuture extends FutureAdapter {

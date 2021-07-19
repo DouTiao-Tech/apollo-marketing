@@ -1,7 +1,7 @@
 package com.doutiaotech.apollo.infrastructure.mysql.dao;
 
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
-import com.doutiaotech.apollo.infrastructure.mysql.model.SyncType;
+import com.doutiaotech.apollo.infrastructure.mysql.enums.SyncType;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
