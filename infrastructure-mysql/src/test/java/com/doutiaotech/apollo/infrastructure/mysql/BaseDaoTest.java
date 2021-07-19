@@ -16,12 +16,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { TestConfig.class }, properties = { "embedded.containers.forceShutdown=true",
+@SpringBootTest(classes = {TestConfig.class}, properties = {"embedded.containers.forceShutdown=true",
         "embedded.mysql.dockerImage=mysql:5.6.50", "embedded.containers.reuseContainer=true",
         "embedded.mysql.init-script-path=schema.sql",
         "mysql.datasource.jdbcUrl=jdbc:mysql://${embedded.mysql.host}:${embedded.mysql.port}/${embedded.mysql.schema}?useSSL=false",
         "mysql.datasource.driverClassName=com.mysql.cj.jdbc.Driver", "mysql.datasource.username=${embedded.mysql.user}",
-        "mysql.datasource.password=${embedded.mysql.password}", "spring.main.banner-mode=off" })
+        "mysql.datasource.password=${embedded.mysql.password}", "spring.main.banner-mode=off", "logging.level.root=INFO"})
 @Transactional
 public abstract class BaseDaoTest {
 

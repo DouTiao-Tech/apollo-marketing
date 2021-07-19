@@ -1,19 +1,5 @@
 package com.doutiaotech.apollo.syncer.scheduler;
 
-import static com.doutiaotech.apollo.syncer.scheduler.TradeSyncScheduler.TRADE_TOPIC;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.concurrent.ExecutorService;
-
 import com.doutiaotech.apollo.core.utils.DateTimeUtils;
 import com.doutiaotech.apollo.core.utils.JsonUtils;
 import com.doutiaotech.apollo.external.dy.api.OrderApi;
@@ -24,7 +10,7 @@ import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncType;
 import com.doutiaotech.apollo.syncer.scheduler.TradeSyncScheduler.TradeSyncTask;
-
+import lombok.SneakyThrows;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -36,10 +22,17 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.concurrent.ListenableFuture;
 
-import lombok.SneakyThrows;
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.concurrent.ExecutorService;
+
+import static com.doutiaotech.apollo.syncer.scheduler.TradeSyncScheduler.TRADE_TOPIC;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { TradeSyncScheduler.class }, properties = "spring.main.banner-mode=off")
+@SpringBootTest(classes = {TradeSyncScheduler.class})
 public class TradeSyncSchedulerTest {
 
     private static final SyncType syncType = SyncType.FETCH_TRADE;

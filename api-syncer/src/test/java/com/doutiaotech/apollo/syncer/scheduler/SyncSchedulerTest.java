@@ -1,19 +1,9 @@
 package com.doutiaotech.apollo.syncer.scheduler;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
-
 import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncType;
 import com.google.common.util.concurrent.MoreExecutors;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +12,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.when;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = SyncSchedulerTest.TestSyncScheduler.class, properties = "spring.main.banner-mode=off")
+@SpringBootTest(classes = SyncSchedulerTest.TestSyncScheduler.class)
 public class SyncSchedulerTest {
 
     private static final SyncType testSyncType = SyncType.FETCH_TRADE;
