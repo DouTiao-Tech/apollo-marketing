@@ -34,7 +34,7 @@ services:
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
   #      - ./.data/mysql:/var/lib/mysql
   clickhouse-server:
-    image: yandex/clickhouse-server:21.7.3.14
+    image: yandex/clickhouse-server:latest
     ports:
       - 8123:8123 # http interface
       - 9000:9000 # native client

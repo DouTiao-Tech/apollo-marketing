@@ -1,60 +1,58 @@
 -- refer to: https://clickhouse.tech/docs/en/
-
 create database if not exists apollo;
-
 -- https://op.jinritemai.com/docs/api-docs/15/555
-CREATE TABLE apollo.trade_kafka_consumer
-(
-    shop_id                   Int32,
-    shop_name                 String,
-    open_id                   Int64,
-    order_id                  Int64,
-    order_level               Int32,
-    biz                       Int32,
-    biz_desc                  String,
-    order_type                Int8,
-    order_type_desc           String,
-    trade_type                Int8,
-    trade_type_desc           String,
-    order_status              Int32,
-    order_status_desc         String,
-    main_status               Int32,
-    main_status_desc          String,
-    pay_time                  DateTime,
-    order_expire_time         DateTime,
-    finish_time               DateTime,
-    create_time               DateTime,
-    update_time               DateTime,
-    cancel_reason             String,
-    buyer_words               String,
-    seller_words              String,
-    b_type                    Int8,
-    b_type_desc               String,
-    sub_b_type                Int8,
-    sub_b_type_desc           String,
-    app_id                    Int64,
-    pay_type                  Int8,
-    channel_payment_no        String,
-    order_amount              Int32,
-    pay_amount                Int32,
-    post_amount               Int32,
-    post_insurance_amount     Int32,
-    modify_amount             Int32,
-    modify_post_amount        Int32,
-    promotion_amount          Int32,
-    promotion_shop_amount     Int32,
+CREATE TABLE apollo.trade_kafka_consumer (
+    shop_id Int32,
+    shop_name String,
+    open_id Int64,
+    order_id Int64,
+    order_level Int32,
+    biz Int32,
+    biz_desc String,
+    order_type Int8,
+    order_type_desc String,
+    trade_type Int8,
+    trade_type_desc String,
+    order_status Int32,
+    order_status_desc String,
+    main_status Int32,
+    main_status_desc String,
+    pay_time DateTime,
+    order_expire_time DateTime,
+    finish_time DateTime,
+    create_time DateTime,
+    update_time DateTime,
+    cancel_reason String,
+    buyer_words String,
+    seller_words String,
+    b_type Int8,
+    b_type_desc String,
+    sub_b_type Int8,
+    sub_b_type_desc String,
+    app_id Int64,
+    pay_type Int8,
+    channel_payment_no String,
+    order_amount Int32,
+    pay_amount Int32,
+    post_amount Int32,
+    post_insurance_amount Int32,
+    modify_amount Int32,
+    modify_post_amount Int32,
+    promotion_amount Int32,
+    promotion_shop_amount Int32,
     promotion_platform_amount Int32,
-    shop_cost_amount          Int32,
-    platform_cost_amount      Int32,
-    promotion_talent_amount   Int32,
-    promotion_pay_amount      Int32,
-    post_tel                  String,
-    post_receiver             String,
-    post_addr                 String, -- json
-    exp_ship_time             DateTime,
-    ship_time                 DateTime,
-    seller_remark_stars       Int32,
-    doudian_open_id           String,
+    shop_cost_amount Int32,
+    platform_cost_amount Int32,
+    promotion_talent_amount Int32,
+    promotion_pay_amount Int32,
+    post_tel String,
+    post_receiver String,
+    post_addr String,
+    -- json
+    exp_ship_time DateTime,
+    ship_time DateTime,
+    seller_remark_stars Int32,
+    doudian_open_id String,
     logistics_info Nested(
         tracking_no String,
         company String,
@@ -62,7 +60,7 @@ CREATE TABLE apollo.trade_kafka_consumer
         delivery_id String,
         company_name String,
         product_info String
-        ),
+    ),
     sku_order_list Nested(
         order_id Int64,
         parent_order_id Int64,
@@ -119,7 +117,8 @@ CREATE TABLE apollo.trade_kafka_consumer
         code String,
         post_tel String,
         post_receiver String,
-        post_addr String ,            -- json
+        post_addr String,
+        -- json
         exp_ship_time DateTime,
         ship_time DateTime,
         logistics_receipt_time DateTime,
@@ -150,12 +149,11 @@ CREATE TABLE apollo.trade_kafka_consumer
         pre_sale_type Int8,
         after_sale_status Int8,
         after_sale_type Int8,
-        refund_status Int8
-        --         ,spec List,
---         warehouse_ids List,
---         out_warehouse_ids List,
---         inventory_list List
-        ),
+        refund_status Int8 --         ,spec List,
+        --         warehouse_ids List,
+        --         out_warehouse_ids List,
+        --         inventory_list List
+    ),
     order_phase_list Nested(
         phase_order_id Int64,
         total_phase Int32,
@@ -176,71 +174,69 @@ CREATE TABLE apollo.trade_kafka_consumer
         phase_promotion_amount Int32,
         current_phase_status_desc String,
         sku_price Int32
-        )
+    )
 ) engine = Kafka settings kafka_broker_list = 'kafka-broker:9092',
-    kafka_topic_list = 'trade',
-    kafka_group_name = 'clickhouse.trade',
-    kafka_format = 'JSONEachRow',
-    kafka_num_consumers = 1;
-
-create table if not exists apollo.trade
-(
-    shop_id                         Int32,
-    shop_name                       String,
-    open_id                         Int64,
-    order_id                        Int64,
-    order_level                     Int32,
-    biz                             Int32,
-    biz_desc                        String,
-    order_type                      Int8,
-    order_type_desc                 String,
-    trade_type                      Int8,
-    trade_type_desc                 String,
-    order_status                    Int32,
-    order_status_desc               String,
-    main_status                     Int32,
-    main_status_desc                String,
-    pay_time                        DateTime,
-    order_expire_time               DateTime,
-    finish_time                     DateTime,
-    create_time                     DateTime,
-    update_time                     DateTime,
-    cancel_reason                   String,
-    buyer_words                     String,
-    seller_words                    String,
-    b_type                          Int8,
-    b_type_desc                     String,
-    sub_b_type                      Int8,
-    sub_b_type_desc                 String,
-    app_id                          Int64,
-    pay_type                        Int8,
-    channel_payment_no              String,
-    order_amount                    Int32,
-    pay_amount                      Int32,
-    post_amount                     Int32,
-    post_insurance_amount           Int32,
-    modify_amount                   Int32,
-    modify_post_amount              Int32,
-    promotion_amount                Int32,
-    promotion_shop_amount           Int32,
-    promotion_platform_amount       Int32,
-    shop_cost_amount                Int32,
-    platform_cost_amount            Int32,
-    promotion_talent_amount         Int32,
-    promotion_pay_amount            Int32,
-    post_tel                        String,
-    post_receiver                   String,
-    post_addr_province_name         String,
-    post_addr_province_id           String,
-    post_addr_city_name             String,
-    post_addr_city_id               String,
-    post_addr_town_name             String,
-    post_addr_town_id               String,
+kafka_topic_list = 'trade',
+kafka_group_name = 'clickhouse.trade',
+kafka_format = 'JSONEachRow',
+kafka_num_consumers = 1;
+create table if not exists apollo.trade (
+    shop_id Int32,
+    shop_name String,
+    open_id Int64,
+    order_id Int64,
+    order_level Int32,
+    biz Int32,
+    biz_desc String,
+    order_type Int8,
+    order_type_desc String,
+    trade_type Int8,
+    trade_type_desc String,
+    order_status Int32,
+    order_status_desc String,
+    main_status Int32,
+    main_status_desc String,
+    pay_time DateTime,
+    order_expire_time DateTime,
+    finish_time DateTime,
+    create_time DateTime,
+    update_time DateTime,
+    cancel_reason String,
+    buyer_words String,
+    seller_words String,
+    b_type Int8,
+    b_type_desc String,
+    sub_b_type Int8,
+    sub_b_type_desc String,
+    app_id Int64,
+    pay_type Int8,
+    channel_payment_no String,
+    order_amount Int32,
+    pay_amount Int32,
+    post_amount Int32,
+    post_insurance_amount Int32,
+    modify_amount Int32,
+    modify_post_amount Int32,
+    promotion_amount Int32,
+    promotion_shop_amount Int32,
+    promotion_platform_amount Int32,
+    shop_cost_amount Int32,
+    platform_cost_amount Int32,
+    promotion_talent_amount Int32,
+    promotion_pay_amount Int32,
+    post_tel String,
+    post_receiver String,
+    post_addr_province_name String,
+    post_addr_province_id String,
+    post_addr_city_name String,
+    post_addr_city_id String,
+    post_addr_town_name String,
+    post_addr_town_id String,
     post_addr_street_encrypt_detail String,
-    exp_ship_time                   DateTime,
-    ship_time                       DateTime,
-    seller_remark_stars             Int32,
-    doudian_open_id                 String,
+    exp_ship_time DateTime,
+    ship_time DateTime,
+    seller_remark_stars Int32,
+    doudian_open_id String,
     logistics_info Nested(
         tracking_no String,
         company String,
@@ -248,7 +244,7 @@ create table if not exists apollo.trade
         delivery_id String,
         company_name String,
         product_info String
-        ),
+    ),
     sku_order_list Nested(
         order_id Int64,
         parent_order_id Int64,
@@ -342,12 +338,11 @@ create table if not exists apollo.trade
         pre_sale_type Int8,
         after_sale_status Int8,
         after_sale_type Int8,
-        refund_status Int8
-        --         ,spec List,
---         warehouse_ids List,
---         out_warehouse_ids List,
---         inventory_list List
-        ),
+        refund_status Int8 --         ,spec List,
+        --         warehouse_ids List,
+        --         out_warehouse_ids List,
+        --         inventory_list List
+    ),
     order_phase_list Nested(
         phase_order_id Int64,
         total_phase Int32,
@@ -368,27 +363,36 @@ create table if not exists apollo.trade
         phase_promotion_amount Int32,
         current_phase_status_desc String,
         sku_price Int32
-        )
+    )
 ) engine = ReplacingMergeTree(update_time) partition by toYYYYMMDD(create_time)
-      order by (shop_id, order_id);
-
+order by (shop_id, order_id);
 -- create materialized view apollo.trade_mv to apollo.trade as
 -- select *
 -- from apollo.trade_kafka_consumer;
-
-create table apollo.shop_daily_stats
-(
-    shop_id                  Int64,
-    stats_day                Date,
-    create_num               Int64,
-    create_amount            Decimal64(2),
-    paid_num                 Int64,
-    paid_amount              Decimal64(2),
-    closed_before_pay_num    Int64,
-    closed_before_pay_amount Decimal64(2)
-) engine = AggregatingMergeTree() partition by shop_id
-      order by (shop_id, stats_day);
-
--- create materialized view apollo.shop_daily_stats_mv to apollo.shop_daily_stats
--- as
--- select // TODO:  from trade
+create materialized view apollo.shop_daily_stats_mv engine = AggregatingMergeTree() partition by shop_id
+order by (shop_id, stats_day) as
+select shop_id,
+    toDate(create_time) as stats_day,
+    uniqState(order_id) as create_order_num,
+    uniqState(doudian_open_id) as create_customer_num,
+    sumState(order_amount) as create_order_amount,
+    uniqIfState(order_id, pay_time is not null) as pay_order_num,
+    sumState(pay_amount) as pay_order_amount,
+    uniqIfState(order_id, main_status = 103) as close_order_num,
+    -- TODO: close status
+    sumIfState(order_amount, main_status = 103) as close_order_amount
+from trade
+group by shop_id,
+    toDate(create_time);
+create materialized view apollo.shop_customer_stats_mv engine = AggregatingMergeTree() partition by shop_id
+order by (shop_id, doudian_open_id) as
+select shop_id,
+    doudian_open_id,
+    uniqState(order_id) as create_order_num,
+    uniqIfState(order_id, pay_time is not null) as pay_order_num,
+    sumState(pay_amount) as pay_order_amount,
+    maxState(create_time) as last_create_time,
+    maxState(pay_time) as last_pay_time
+from trade
+group by shop_id,
+    doudian_open_id;

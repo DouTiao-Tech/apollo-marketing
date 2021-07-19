@@ -1,30 +1,26 @@
 package com.doutiaotech.apollo.syncer.scheduler;
 
-import com.doutiaotech.apollo.core.concurrent.FutureTaskRegistry;
-import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
-import com.doutiaotech.apollo.infrastructure.mysql.enums.SyncType;
-import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
-import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public abstract class BaseSyncScheduler {
+import com.doutiaotech.apollo.core.concurrent.FutureTaskRegistry;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
 
-    @Autowired
-    protected SyncItemDao syncItemDao;
+import org.springframework.scheduling.annotation.Scheduled;
+
+import lombok.SneakyThrows;
+
+public abstract class BaseSyncScheduler {
 
     FutureTaskRegistry<Long> registry = new FutureTaskRegistry<>();
 
     @SneakyThrows
     @Scheduled(fixedDelay = 1000)
     public void schedule() {
-        List<SyncItem> syncItems = syncItemDao.findByTypeAndStop(supportType(), false);
+        List<SyncItem> syncItems = findSyncItem();
         Map<Long, SyncItem> idItemMap = syncItems.stream()
                 .collect(Collectors.toMap(SyncItem::getId, Function.identity()));
         List<Long> needSyncItemIds = registry.purgeDoneAndRejectRunning(idItemMap.keySet());
@@ -34,8 +30,8 @@ public abstract class BaseSyncScheduler {
         });
     }
 
-    protected abstract Future<?> submitTask(SyncItem syncItem);
+    protected abstract List<SyncItem> findSyncItem();
 
-    protected abstract SyncType supportType();
+    protected abstract Future<?> submitTask(SyncItem syncItem);
 
 }

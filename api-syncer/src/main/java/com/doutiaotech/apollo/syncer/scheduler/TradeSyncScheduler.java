@@ -1,6 +1,7 @@
 package com.doutiaotech.apollo.syncer.scheduler;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
@@ -12,8 +13,9 @@ import com.doutiaotech.apollo.external.dy.request.Request;
 import com.doutiaotech.apollo.external.dy.request.TradeSearch;
 import com.doutiaotech.apollo.external.dy.response.Response;
 import com.doutiaotech.apollo.external.dy.response.TradeSearchPage;
-import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
+import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
 import com.doutiaotech.apollo.infrastructure.mysql.enums.SyncType;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
 
 import org.jooq.lambda.Unchecked;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
     public static final String TRADE_TOPIC = "trade";
 
     @Autowired
+    private SyncItemDao syncItemDao;
+
+    @Autowired
     private OrderApi orderApi;
 
     @Autowired
@@ -38,12 +43,13 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
     private ExecutorService tradeSyncExecutor;
 
     @Override
-    protected SyncType supportType() {
-        return SyncType.FETCH_TRADE;
+    protected List<SyncItem> findSyncItem() {
+        return syncItemDao.findByTypeAndStop(SyncType.FETCH_TRADE, false);
     }
 
     @Override
     protected Future<?> submitTask(SyncItem syncItem) {
+        // syncItem.setEnd();
         return tradeSyncExecutor.submit(new TradeSyncTask(syncItem));
     }
 

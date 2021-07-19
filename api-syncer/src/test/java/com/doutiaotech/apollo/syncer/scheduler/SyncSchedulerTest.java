@@ -1,25 +1,24 @@
 package com.doutiaotech.apollo.syncer.scheduler;
 
-import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
+
 import com.doutiaotech.apollo.infrastructure.mysql.enums.SyncType;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
 import com.google.common.util.concurrent.MoreExecutors;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SyncSchedulerTest.TestSyncScheduler.class)
@@ -30,16 +29,12 @@ public class SyncSchedulerTest {
     private static final LocalDateTime start = LocalDateTime.now();
     private static final LocalDateTime end = LocalDateTime.now();
 
-    @MockBean
-    SyncItemDao syncItemDao;
-
     @Autowired
     TestSyncScheduler testSyncScheduler;
 
     @Test
     public void test_syncScheduler() {
-        when(syncItemDao.findByTypeAndStop(testSyncType, false))
-                .thenReturn(Collections.singletonList(mockSyncItem(1L)));
+        testSyncScheduler.syncItem = mockSyncItem(1L);
         testSyncScheduler.value = 1L;
         testSyncScheduler.result = 2L;
         testSyncScheduler.schedule();
@@ -61,6 +56,8 @@ public class SyncSchedulerTest {
     @Component
     static class TestSyncScheduler extends BaseSyncScheduler {
 
+        SyncItem syncItem;
+
         long value;
 
         long result;
@@ -73,9 +70,10 @@ public class SyncSchedulerTest {
         }
 
         @Override
-        protected SyncType supportType() {
-            return testSyncType;
+        protected List<SyncItem> findSyncItem() {
+            return Collections.singletonList(syncItem);
         }
+
     }
 
 }
