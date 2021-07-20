@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { TestConfig.class }, properties = { "embedded.containers.forceShutdown=true",
-        "embedded.clickhouse.dockerImage=yandex/clickhouse-server:21.7.3.14", "embedded.containers.reuseContainer=true",
+        "embedded.clickhouse.dockerImage=yandex/clickhouse-server:21.7.4-alpine", "embedded.containers.reuseContainer=true",
         // "embedded.clickhouse.init-script-path=schema.sql",
         "clickhouse.datasource.jdbcUrl=jdbc:clickhouse://${embedded.clickhouse.host}:${embedded.clickhouse.port}/${embedded.clickhouse.schema}",
         "clickhouse.datasource.driverClassName=ru.yandex.clickhouse.ClickHouseDriver",

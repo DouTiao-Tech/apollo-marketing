@@ -376,19 +376,31 @@ create table if not exists apollo.trade
 -- select *
 -- from apollo.trade_kafka_consumer;
 
-create table apollo.shop_daily_stats
-(
-    shop_id                  Int64,
-    stats_day                Date,
-    create_num               Int64,
-    create_amount            Decimal64(2),
-    paid_num                 Int64,
-    paid_amount              Decimal64(2),
-    closed_before_pay_num    Int64,
-    closed_before_pay_amount Decimal64(2)
-) engine = AggregatingMergeTree() partition by shop_id
-      order by (shop_id, stats_day);
 
--- create materialized view apollo.shop_daily_stats_mv to apollo.shop_daily_stats
--- as
--- select // TODO:  from trade
+create materialized view apollo.shop_daily_stats_mv engine = AggregatingMergeTree() partition by shop_id
+    order by (shop_id, stats_day) as
+select shop_id,
+       toDate(create_time)                         as stats_day,
+       uniqState(order_id)                         as create_order_num,
+       uniqState(doudian_open_id)                  as create_customer_num,
+       sumState(order_amount)                      as create_order_amount,
+       uniqIfState(order_id, pay_time is not null) as pay_order_num,
+       sumState(pay_amount)                        as pay_order_amount,
+       uniqIfState(order_id, main_status = 103)    as close_order_num,
+       sumIfState(order_amount, main_status = 103) as close_order_amount
+from apollo.trade
+group by shop_id,
+         toDate(create_time);
+
+create materialized view apollo.shop_customer_stats_mv engine = AggregatingMergeTree() partition by shop_id
+    order by (shop_id, doudian_open_id) as
+select shop_id,
+       doudian_open_id,
+       uniqState(order_id)                         as create_order_num,
+       uniqIfState(order_id, pay_time is not null) as pay_order_num,
+       sumState(pay_amount)                        as pay_order_amount,
+       maxOrNullState(create_time)                 as last_create_time,
+       maxState(pay_time)                          as last_pay_time
+from apollo.trade
+group by shop_id,
+         doudian_open_id;

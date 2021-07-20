@@ -16,9 +16,29 @@ services:
       - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       - KAFKA_LISTENERS=INSIDE://:9092,OUTSIDE://:19092
       - KAFKA_ADVERTISED_LISTENERS=INSIDE://:9092,OUTSIDE://localhost:19092
-#      - KAFKA_ADVERTISED_LISTENERS=INSIDE://:9092,OUTSIDE://report:19092
+      #- KAFKA_ADVERTISED_LISTENERS=INSIDE://:9092,OUTSIDE://report:19092
       - KAFKA_INTER_BROKER_LISTENER_NAME=INSIDE
       - KAFKA_CREATE_TOPICS=trade:2:1,sms:2:1
+  ksqldb-server:
+    image: confluentinc/ksqldb-server:0.19.0
+    depends_on:
+      - kafka-broker
+    ports:
+      - 8088:8088
+    environment:
+      KSQL_LISTENERS: http://0.0.0.0:8088
+      KSQL_BOOTSTRAP_SERVERS: kafka-broker:9092
+      KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: "true"
+      KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: "true"
+  # https://docs.ksqldb.io/en/latest/reference/
+  ksqldb-cli:
+    image: confluentinc/ksqldb-cli:0.19.0
+    container_name: ksqldb-cli
+    depends_on:
+      - kafka-broker
+      - ksqldb-server
+    entrypoint: /bin/sh
+    tty: true
   mysql:
     image: mysql:5.6.50
     restart: always
@@ -32,12 +52,12 @@ services:
     volumes:
       - ./.init-sql/mysql:/docker-entrypoint-initdb.d
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-  #      - ./.data/mysql:/var/lib/mysql
+  # - ./.data/mysql:/var/lib/mysql
   clickhouse-server:
-    image: yandex/clickhouse-server:21.7.3.14
+    image: yandex/clickhouse-server:21.7.4-alpine
     ports:
       - 8123:8123 # http interface
       - 9000:9000 # native client
     volumes:
       - ./.init-sql/clickhouse:/docker-entrypoint-initdb.d
-#      - ./.data/clickhouse:/var/lib/clickhouse
+  # - ./.data/clickhouse:/var/lib/clickhouse
