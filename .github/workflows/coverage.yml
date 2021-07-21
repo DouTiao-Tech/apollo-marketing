@@ -33,7 +33,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: >
-            ./api-syncer/target/site/jacoco/jacoco.xml,
-            ./apollo-util/target/site/jacoco/jacoco.xml
+            ./apollo-test/target/site/jacoco-aggregate/jacoco.xml,
           flags: unittests
           verbose: true
