@@ -25,6 +25,7 @@
         <clickhouse-jdbc.version>0.3.1</clickhouse-jdbc.version>
         <testcontainers.version>1.15.1</testcontainers.version>
         <testcontainers-spring-boot.version>2.0.10</testcontainers-spring-boot.version>
+        <easyexcel.version>2.2.10</easyexcel.version>
     </properties>
 
     <modules>
@@ -153,6 +154,13 @@
                 <groupId>com.doutiaotech.apollo</groupId>
                 <artifactId>starter</artifactId>
                 <version>${revision}</version>
+            </dependency>
+
+            <!-- util module -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
