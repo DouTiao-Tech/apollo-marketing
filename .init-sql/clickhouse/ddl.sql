@@ -369,30 +369,32 @@ order by (shop_id, order_id);
 -- create materialized view apollo.trade_mv to apollo.trade as
 -- select *
 -- from apollo.trade_kafka_consumer;
+
+
 create materialized view apollo.shop_daily_stats_mv engine = AggregatingMergeTree() partition by shop_id
-order by (shop_id, stats_day) as
+    order by (shop_id, stats_day) as
 select shop_id,
-    toDate(create_time) as stats_day,
-    uniqState(order_id) as create_order_num,
-    uniqState(doudian_open_id) as create_customer_num,
-    sumState(order_amount) as create_order_amount,
-    uniqIfState(order_id, pay_time is not null) as pay_order_num,
-    sumState(pay_amount) as pay_order_amount,
-    uniqIfState(order_id, main_status = 103) as close_order_num,
-    -- TODO: close status
-    sumIfState(order_amount, main_status = 103) as close_order_amount
-from trade
+       toDate(create_time)                         as stats_day,
+       uniqState(order_id)                         as create_order_num,
+       uniqState(doudian_open_id)                  as create_customer_num,
+       sumState(order_amount)                      as create_order_amount,
+       uniqIfState(order_id, pay_time is not null) as pay_order_num,
+       sumState(pay_amount)                        as pay_order_amount,
+       uniqIfState(order_id, main_status = 103)    as close_order_num,
+       sumIfState(order_amount, main_status = 103) as close_order_amount
+from apollo.trade
 group by shop_id,
-    toDate(create_time);
+         toDate(create_time);
+
 create materialized view apollo.shop_customer_stats_mv engine = AggregatingMergeTree() partition by shop_id
-order by (shop_id, doudian_open_id) as
+    order by (shop_id, doudian_open_id) as
 select shop_id,
-    doudian_open_id,
-    uniqState(order_id) as create_order_num,
-    uniqIfState(order_id, pay_time is not null) as pay_order_num,
-    sumState(pay_amount) as pay_order_amount,
-    maxState(create_time) as last_create_time,
-    maxState(pay_time) as last_pay_time
-from trade
+       doudian_open_id,
+       uniqState(order_id)                         as create_order_num,
+       uniqIfState(order_id, pay_time is not null) as pay_order_num,
+       sumState(pay_amount)                        as pay_order_amount,
+       maxOrNullState(create_time)                 as last_create_time,
+       maxState(pay_time)                          as last_pay_time
+from apollo.trade
 group by shop_id,
-    doudian_open_id;
+         doudian_open_id;

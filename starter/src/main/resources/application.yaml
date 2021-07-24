@@ -9,12 +9,14 @@ spring:
         enable:
           idempotence: true
       bootstrap-servers: localhost:19092
+      transaction-id-prefix: tx-
     consumer:
       bootstrap-servers: localhost:19092
       enable-auto-commit: false
       fetch-max-wait: 1000
       auto-offset-reset: earliest
       fetch-min-size: 512KB
+      isolation-level: read_committed
   mvc:
     format:
       date: yyyy-MM-dd

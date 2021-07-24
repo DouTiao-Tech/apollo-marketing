@@ -40,4 +40,4 @@
 ```sh
 mvn clean test
 ```
-每个项目模块的`target/site/jacoco/index.html`有相应的测试报告
+`apollo-test`模块的`target/site/jacoco-aggregate/index.html`有相应的测试报告
