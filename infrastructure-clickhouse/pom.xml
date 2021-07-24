@@ -28,8 +28,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>clickhouse</artifactId>
+            <groupId>com.playtika.testcontainers</groupId>
+            <artifactId>embedded-clickhouse</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
