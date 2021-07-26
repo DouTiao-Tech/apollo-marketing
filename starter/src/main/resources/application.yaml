@@ -61,9 +61,9 @@ feign:
 
 syncer:
   trade:
-    corePoolSize: 10
-    maxPoolSize: 10
-    keepAliveSeconds: 60
+    thread-name-prefix: trade-sync-
+    core-pool-size: 10
+    max-pool-size: 10
+    keep-alive-seconds: 60
     queueCapacity: 100
     allowCoreThreadTimeOut: true
-    threadNamePrefixSet: true

@@ -1,11 +1,5 @@
 package com.doutiaotech.apollo.syncer.scheduler;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-import java.util.stream.Collectors;
-
 import com.doutiaotech.apollo.core.utils.DateTimeUtils;
 import com.doutiaotech.apollo.core.utils.JsonUtils;
 import com.doutiaotech.apollo.external.dy.api.OrderApi;
@@ -17,14 +11,18 @@ import com.doutiaotech.apollo.external.dy.response.TradeSearchPage.ShopOrderList
 import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
 import com.doutiaotech.apollo.infrastructure.mysql.enums.SyncType;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
-
+import lombok.extern.slf4j.Slf4j;
 import org.jooq.lambda.Unchecked;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -42,7 +40,7 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
     private KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
-    private ExecutorService tradeSyncExecutor;
+    private ThreadPoolTaskExecutor tradeSyncExecutor;
 
     @Override
     protected List<SyncItem> findSyncItem() {

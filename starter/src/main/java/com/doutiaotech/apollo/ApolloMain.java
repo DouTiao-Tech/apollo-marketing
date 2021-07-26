@@ -1,6 +1,6 @@
 package com.doutiaotech.apollo;
 
-import com.doutiaotech.apollo.syncer.ApiSycnerConfig;
+import com.doutiaotech.apollo.syncer.ApiSycnerAutoConfiguration;
 import com.doutiaotech.apollo.web.WebConfig;
 
 import org.springframework.boot.SpringApplication;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 @Import({
-        ApiSycnerConfig.class,
+        ApiSycnerAutoConfiguration.class,
         WebConfig.class
 })
 public class ApolloMain {
