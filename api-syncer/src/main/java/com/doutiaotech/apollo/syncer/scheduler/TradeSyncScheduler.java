@@ -44,12 +44,12 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
 
     @Override
     protected List<SyncItem> findSyncItem() {
+        // TODO: time filter
         return syncItemDao.findByTypeAndStop(SyncType.FETCH_TRADE, false);
     }
 
     @Override
     protected Future<?> submitTask(SyncItem syncItem) {
-        // syncItem.setEnd();
         return tradeSyncExecutor.submit(new TradeSyncTask(syncItem));
     }
 
