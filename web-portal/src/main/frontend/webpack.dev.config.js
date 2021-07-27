@@ -158,7 +158,7 @@ function buildPlugins() {
         }),
         new HtmlWebpackPlugin({
             title: "开发中...",
-            template: "./public/index.html"
+            template: "./static/index.html"
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css',
