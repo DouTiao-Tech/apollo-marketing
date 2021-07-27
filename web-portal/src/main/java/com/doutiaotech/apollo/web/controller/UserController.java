@@ -3,10 +3,7 @@ package com.doutiaotech.apollo.web.controller;
 import com.doutiaotech.apollo.infrastructure.mysql.dao.UserDao;
 import com.doutiaotech.apollo.infrastructure.mysql.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -27,4 +24,24 @@ public class UserController {
         return userDao.findById(id);
     }
 
+    // TODO: user login and logout
+    @PostMapping("/api/user")
+    public User register(@RequestBody User user) {
+        return new User();
+    }
+
+    @GetMapping("/api/session")
+    public User currentUser(User user) {
+        return user;
+    }
+
+    @PostMapping("/api/session")
+    public User login(@RequestParam String principal,
+                      @RequestParam String credential) {
+        return new User();
+    }
+
+    @DeleteMapping("/api/session")
+    public void logout(User user) {
+    }
 }

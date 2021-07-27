@@ -1,6 +1,6 @@
 spring:
   application:
-    name: apollo-marketing
+    name: @project.artifactId@
   kafka:
     producer:
       acks: all
