@@ -46,7 +46,7 @@ public class TradeSyncSchedulerTest {
     KafkaTemplate<String, String> kafkaTemplate;
 
     @MockBean
-    ExecutorService tradeSyncExecutor;
+    ThreadPoolTaskExecutor tradeSyncExecutor;
 
     @MockBean
     SyncItemDao syncItemDao;
