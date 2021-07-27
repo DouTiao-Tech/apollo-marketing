@@ -1,5 +1,18 @@
 package com.doutiaotech.apollo.syncer.scheduler;
 
+import static com.doutiaotech.apollo.syncer.scheduler.TradeSyncScheduler.TRADE_TOPIC;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
+
 import com.doutiaotech.apollo.core.utils.DateTimeUtils;
 import com.doutiaotech.apollo.core.utils.JsonUtils;
 import com.doutiaotech.apollo.external.dy.api.OrderApi;
@@ -7,10 +20,10 @@ import com.doutiaotech.apollo.external.dy.response.Response;
 import com.doutiaotech.apollo.external.dy.response.TradeSearchPage;
 import com.doutiaotech.apollo.external.dy.response.TradeSearchPage.ShopOrderListBean;
 import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
-import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
 import com.doutiaotech.apollo.infrastructure.mysql.enums.SyncType;
+import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
 import com.doutiaotech.apollo.syncer.scheduler.TradeSyncScheduler.TradeSyncTask;
-import lombok.SneakyThrows;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -19,17 +32,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.concurrent.ListenableFuture;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.concurrent.ExecutorService;
-
-import static com.doutiaotech.apollo.syncer.scheduler.TradeSyncScheduler.TRADE_TOPIC;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import lombok.SneakyThrows;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {TradeSyncScheduler.class})
