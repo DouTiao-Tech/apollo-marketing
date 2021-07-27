@@ -47,7 +47,7 @@ function buildResolve() {
         extensions: ['.js', '.jsx', '.json'],
         alias: {
             util: path.resolve(__dirname, "src/util"),
-            service: path.resolve(__dirname, "src/service"),
+            api: path.resolve(__dirname, "src/api"),
             layout: path.resolve(__dirname, "src/layout"),
             common: path.resolve(__dirname, "src/common"),
             module: path.resolve(__dirname, "src/module"),

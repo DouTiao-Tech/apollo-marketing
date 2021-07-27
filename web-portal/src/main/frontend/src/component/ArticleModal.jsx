@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {Form, Input} from "antd";
 import commonCss from "common/common.less";
-import {findAll} from "service/category.js";
-import {saveArticle} from "service/article.js";
+import {findAll} from "api/category.js";
+import {saveArticle} from "api/article.js";
 import {push} from "util/router.js";
 import _ from "lodash";
 

@@ -2,7 +2,7 @@ import React from "react";
 import commonCss from "common/common.less";
 import {Button, Form, Layout} from "antd";
 import {Copyright} from "ui";
-import {login} from "service/session.js";
+import {login} from "api/session.js";
 import {dispatch} from "module/store.js";
 import {userLogin} from "module/actions.js";
 import {push} from "util/router.js";

@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {deleteArticle, likeFuzzyTitle, likeTitlePrefix, search} from "service/article.js";
+import {deleteArticle, likeFuzzyTitle, likeTitlePrefix, search} from "api/article.js";
 import {AutoComplete, Card, Icon, Input, List, message, Modal, Select, Tooltip} from "antd";
 import css from "./ArticleList.less";
 import commonCss from "common/common.less";

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {findArticleById} from "service/article.js";
+import {findArticleById} from "api/article.js";
 
 export class ArticleEdit extends Component {
 
