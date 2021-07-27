@@ -5,6 +5,12 @@ import {push} from "util/router.js";
 /**
  * Axios相关配置
  * @see https://www.npmjs.com/package/axios
+ * 用法：
+ * <pre>
+ *     ajax(path).path(id).get(); // GET /path/id
+ *     ajax(path).query({page, size}).get(); // GET /path?page=1&size=10
+ *     ajax(path).payload(article).post();   // POST /path   \r\n   payload
+ * </pre>
  */
 
 /* Creating an instance */

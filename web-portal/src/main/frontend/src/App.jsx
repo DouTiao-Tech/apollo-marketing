@@ -11,7 +11,7 @@ import {ButtonLink, Copyright, FlexBox, FlexContent} from "ui";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import * as actions from "module/actions.js";
-import {currentUser, logout} from "service/session.js";
+import {currentUser, logout} from "api/session.js";
 import classNames from "classnames";
 import {BrowserRouter as Router, push} from "util/router.js";
 import {ArticleEdit} from "layout/ArticleEdit.jsx";

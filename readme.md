@@ -35,6 +35,40 @@
 
 1. `npm run start`启动前端项目
 
+2. 前端技术：
+
+项目结构: 
+```
+|--api       # 后端api接口
+|--common    # 公共样式
+|--component # 公共业务组件
+|--layout    # 页面布局组件
+  |-- directory   # 根据业务功能再细化布局
+  |-- directory
+|--module    # redux
+|--ui        # 公共组件(业务无关)
+|--util      # 前端工具类
+```
+
+* [x] react: https://reactjs.org/docs/getting-started.html
+  - [x] React组件：https://reactjs.org/docs/react-component.html
+  - [x] 高阶组件：https://reactjs.org/docs/higher-order-components.html
+  - [x] React官方例子：https://reactjs.org/community/examples.html
+  - [ ] React Hook: https://reactjs.org/docs/hooks-intro.html
+  - [ ] React Top Api: https://reactjs.org/docs/react-api.html
+* [ ] react-router: https://reactrouter.com/web/example/basic
+* [ ] react-redux: https://react-redux.js.org/introduction/getting-started
+* [x] ant-design: https://ant.design/components/overview-cn/
+* [x] lodash: https://lodash.com/docs/4.17.15
+* [x] axios: https://axios-http.com/docs/intro
+
+  > - [X] 是需要重点学习的
+  > - [ ] 是选学的，项目基本不用怎么改，改到的时候再去学一下也没问题
+  > * React的重点章节学习一下
+  > * ant-design的组件大致浏览一遍，做到心底有数，什么时候要用再去看文档
+  > * 能不用lodash的地方可以不用lodash: https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore
+  > * axios已经在`util/ajax.js`做了封装，比原生用起来更方便的链式调用
+
 ## 开发规范
 
 * [HTTP-Restful](./.doc/HTTP-RESTful.md)
