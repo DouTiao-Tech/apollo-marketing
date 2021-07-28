@@ -25,6 +25,7 @@
         <clickhouse-jdbc.version>0.3.1</clickhouse-jdbc.version>
         <testcontainers.version>1.15.1</testcontainers.version>
         <testcontainers-spring-boot.version>2.0.10</testcontainers-spring-boot.version>
+        <springdoc.version>1.5.10</springdoc.version>
         <easyexcel.version>2.2.10</easyexcel.version>
     </properties>
 
@@ -90,7 +91,7 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- commons -->
+            <!-- dependency manager -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -101,12 +102,15 @@
                 <artifactId>jool-java-8</artifactId>
                 <version>${jool-java.version}</version>
             </dependency>
-
-            <!-- ClickHouse -->
             <dependency>
                 <groupId>ru.yandex.clickhouse</groupId>
                 <artifactId>clickhouse-jdbc</artifactId>
                 <version>${clickhouse-jdbc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
 
             <!-- all module -->
