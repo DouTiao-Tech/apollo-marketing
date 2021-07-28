@@ -28,6 +28,7 @@
     ```
    > 如果修改了`.init-sql`中的ddl表结构，注意重启docker容器
 2. 启动应用，不同环境下添加`-Dspring.profiles.active=dev`参数，目前支持`dev`、`prod`两个环境
+3. 接口文档地址，http://localhost:8888/swagger-ui.html
 
 ## 前端
 
