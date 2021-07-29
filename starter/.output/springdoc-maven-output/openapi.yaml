@@ -1,0 +1,711 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8888
+  description: Generated server url
+paths:
+  /user/api/user:
+    post:
+      tags:
+      - user-controller
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/User'
+  /user/api/session:
+    get:
+      tags:
+      - user-controller
+      operationId: currentUser
+      parameters:
+      - name: user
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/User'
+    post:
+      tags:
+      - user-controller
+      operationId: login
+      parameters:
+      - name: principal
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: credential
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      tags:
+      - user-controller
+      operationId: logout
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: OK
+  /user:
+    get:
+      tags:
+      - user-controller
+      operationId: hello
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /user/{id}:
+    get:
+      tags:
+      - user-controller
+      operationId: getUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/User'
+  /trade/{id}:
+    get:
+      tags:
+      - trade-controller
+      operationId: findOne
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Trade'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        shopName:
+          type: string
+        created:
+          type: string
+          format: date-time
+        lastModified:
+          type: string
+          format: date-time
+    AfterSaleInfoBean:
+      type: object
+      properties:
+        after_sale_status:
+          type: integer
+          format: int32
+        after_sale_type:
+          type: integer
+          format: int32
+        refund_status:
+          type: integer
+          format: int32
+    CityBean:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+    InventoryListBean:
+      type: object
+      properties:
+        warehouse_id:
+          type: string
+        out_warehouse_id:
+          type: string
+        inventory_type:
+          type: integer
+          format: int32
+        inventory_type_desc:
+          type: string
+        count:
+          type: integer
+          format: int32
+    LogisticsInfoBean:
+      type: object
+      properties:
+        tracking_no:
+          type: string
+        company:
+          type: string
+        ship_time:
+          type: integer
+          format: int32
+        delivery_id:
+          type: string
+        company_name:
+          type: string
+        product_info:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductInfoBean'
+    OrderPhaseListBean:
+      type: object
+      properties:
+        phase_order_id:
+          type: string
+        total_phase:
+          type: integer
+          format: int32
+        current_phase:
+          type: integer
+          format: int32
+        pay_success:
+          type: boolean
+        sku_order_id:
+          type: string
+        campaign_id:
+          type: integer
+          format: int64
+        phase_payable_price:
+          type: integer
+          format: int32
+        phase_pay_type:
+          type: integer
+          format: int32
+        phase_open_time:
+          type: integer
+          format: int32
+        phase_pay_time:
+          type: integer
+          format: int32
+        phase_close_time:
+          type: integer
+          format: int32
+        channel_payment_no:
+          type: string
+        phase_order_amount:
+          type: integer
+          format: int32
+        phase_sum_amount:
+          type: integer
+          format: int32
+        phase_post_amount:
+          type: integer
+          format: int32
+        phase_pay_amount:
+          type: integer
+          format: int32
+        phase_promotion_amount:
+          type: integer
+          format: int32
+        current_phase_status_desc:
+          type: string
+        sku_price:
+          type: integer
+          format: int32
+    PostAddrBean:
+      type: object
+      properties:
+        province:
+          $ref: '#/components/schemas/ProvinceBean'
+        city:
+          $ref: '#/components/schemas/CityBean'
+        town:
+          $ref: '#/components/schemas/TownBean'
+        street:
+          $ref: '#/components/schemas/StreetBean'
+        detail:
+          type: string
+    ProductInfoBean:
+      type: object
+      properties:
+        product_name:
+          type: string
+        price:
+          type: integer
+          format: int32
+        outer_sku_id:
+          type: string
+        sku_id:
+          type: integer
+          format: int32
+        product_count:
+          type: integer
+          format: int32
+        product_id:
+          type: integer
+          format: int64
+        sku_order_id:
+          type: string
+        sku_specs:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkuSpecsBean'
+    ProvinceBean:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+    SkuOrderListBean:
+      type: object
+      properties:
+        order_id:
+          type: string
+        parent_order_id:
+          type: string
+        order_level:
+          type: integer
+          format: int32
+        biz:
+          type: integer
+          format: int32
+        biz_desc:
+          type: string
+        order_type:
+          type: integer
+          format: int32
+        order_type_desc:
+          type: string
+        trade_type:
+          type: integer
+          format: int32
+        trade_type_desc:
+          type: string
+        order_status:
+          type: integer
+          format: int32
+        order_status_desc:
+          type: string
+        main_status:
+          type: integer
+          format: int32
+        main_status_desc:
+          type: string
+        pay_time:
+          type: integer
+          format: int32
+        order_expire_time:
+          type: integer
+          format: int32
+        finish_time:
+          type: integer
+          format: int32
+        create_time:
+          type: integer
+          format: int32
+        update_time:
+          type: integer
+          format: int32
+        cancel_reason:
+          type: string
+        b_type:
+          type: integer
+          format: int32
+        b_type_desc:
+          type: string
+        sub_b_type:
+          type: integer
+          format: int32
+        sub_b_type_desc:
+          type: string
+        send_pay:
+          type: integer
+          format: int32
+        send_pay_desc:
+          type: string
+        author_id:
+          type: integer
+          format: int32
+        author_name:
+          type: string
+        theme_type:
+          type: string
+        theme_type_desc:
+          type: string
+        app_id:
+          type: integer
+          format: int64
+        room_id:
+          type: integer
+          format: int64
+        content_id:
+          type: string
+        video_id:
+          type: string
+        origin_id:
+          type: string
+        cid:
+          type: integer
+          format: int64
+        c_biz:
+          type: integer
+          format: int32
+        c_biz_desc:
+          type: string
+        page_id:
+          type: integer
+          format: int64
+        pay_type:
+          type: integer
+          format: int32
+        channel_payment_no:
+          type: string
+        order_amount:
+          type: integer
+          format: int32
+        pay_amount:
+          type: integer
+          format: int32
+        post_insurance_amount:
+          type: integer
+          format: int32
+        modify_amount:
+          type: integer
+          format: int32
+        modify_post_amount:
+          type: integer
+          format: int32
+        promotion_amount:
+          type: integer
+          format: int32
+        promotion_shop_amount:
+          type: integer
+          format: int32
+        promotion_platform_amount:
+          type: integer
+          format: int32
+        shop_cost_amount:
+          type: integer
+          format: int32
+        platform_cost_amount:
+          type: integer
+          format: int32
+        promotion_talent_amount:
+          type: integer
+          format: int32
+        promotion_pay_amount:
+          type: integer
+          format: int32
+        code:
+          type: string
+        post_tel:
+          type: string
+        post_receiver:
+          type: string
+        post_addr:
+          $ref: '#/components/schemas/PostAddrBean'
+        exp_ship_time:
+          type: integer
+          format: int32
+        ship_time:
+          type: integer
+          format: int32
+        logistics_receipt_time:
+          type: integer
+          format: int32
+        confirm_receipt_time:
+          type: integer
+          format: int32
+        goods_type:
+          type: integer
+          format: int32
+        product_id:
+          type: integer
+          format: int64
+        sku_id:
+          type: integer
+          format: int32
+        first_cid:
+          type: integer
+          format: int32
+        second_cid:
+          type: integer
+          format: int32
+        third_cid:
+          type: integer
+          format: int32
+        fourth_cid:
+          type: integer
+          format: int32
+        out_sku_id:
+          type: string
+        supplier_id:
+          type: string
+        out_product_id:
+          type: string
+        inventory_type:
+          type: string
+        inventory_type_desc:
+          type: string
+        reduce_stock_type:
+          type: integer
+          format: int32
+        reduce_stock_type_desc:
+          type: string
+        origin_amount:
+          type: integer
+          format: int32
+        has_tax:
+          type: boolean
+        item_num:
+          type: integer
+          format: int32
+        sum_amount:
+          type: integer
+          format: int32
+        source_platform:
+          type: string
+        product_pic:
+          type: string
+        is_comment:
+          type: integer
+          format: int32
+        product_name:
+          type: string
+        post_amount:
+          type: integer
+          format: int32
+        pre_sale_type:
+          type: integer
+          format: int32
+        after_sale_info:
+          $ref: '#/components/schemas/AfterSaleInfoBean'
+        spec:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpecBean'
+        warehouse_ids:
+          type: array
+          items:
+            type: string
+        out_warehouse_ids:
+          type: array
+          items:
+            type: string
+        inventory_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryListBean'
+    SkuSpecsBean:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    SpecBean:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    StreetBean:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+    TownBean:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+    Trade:
+      type: object
+      properties:
+        shop_id:
+          type: integer
+          format: int32
+        shop_name:
+          type: string
+        open_id:
+          type: string
+        order_id:
+          type: string
+        order_level:
+          type: integer
+          format: int32
+        biz:
+          type: integer
+          format: int32
+        biz_desc:
+          type: string
+        order_type:
+          type: integer
+          format: int32
+        order_type_desc:
+          type: string
+        trade_type:
+          type: integer
+          format: int32
+        trade_type_desc:
+          type: string
+        order_status:
+          type: integer
+          format: int32
+        order_status_desc:
+          type: string
+        main_status:
+          type: integer
+          format: int32
+        main_status_desc:
+          type: string
+        pay_time:
+          type: integer
+          format: int32
+        order_expire_time:
+          type: integer
+          format: int32
+        finish_time:
+          type: integer
+          format: int32
+        create_time:
+          type: integer
+          format: int32
+        update_time:
+          type: integer
+          format: int32
+        cancel_reason:
+          type: string
+        buyer_words:
+          type: string
+        seller_words:
+          type: string
+        b_type:
+          type: integer
+          format: int32
+        b_type_desc:
+          type: string
+        sub_b_type:
+          type: integer
+          format: int32
+        sub_b_type_desc:
+          type: string
+        app_id:
+          type: integer
+          format: int64
+        pay_type:
+          type: integer
+          format: int32
+        channel_payment_no:
+          type: string
+        order_amount:
+          type: integer
+          format: int32
+        pay_amount:
+          type: integer
+          format: int32
+        post_amount:
+          type: integer
+          format: int32
+        post_insurance_amount:
+          type: integer
+          format: int32
+        modify_amount:
+          type: integer
+          format: int32
+        modify_post_amount:
+          type: integer
+          format: int32
+        promotion_amount:
+          type: integer
+          format: int32
+        promotion_shop_amount:
+          type: integer
+          format: int32
+        promotion_platform_amount:
+          type: integer
+          format: int32
+        shop_cost_amount:
+          type: integer
+          format: int32
+        platform_cost_amount:
+          type: integer
+          format: int32
+        promotion_talent_amount:
+          type: integer
+          format: int32
+        promotion_pay_amount:
+          type: integer
+          format: int32
+        post_tel:
+          type: string
+        post_receiver:
+          type: string
+        post_addr:
+          $ref: '#/components/schemas/PostAddrBean'
+        exp_ship_time:
+          type: integer
+          format: int32
+        ship_time:
+          type: integer
+          format: int32
+        seller_remark_stars:
+          type: integer
+          format: int32
+        doudian_open_id:
+          type: string
+        logistics_info:
+          type: array
+          items:
+            $ref: '#/components/schemas/LogisticsInfoBean'
+        sku_order_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkuOrderListBean'
+        order_phase_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderPhaseListBean'
