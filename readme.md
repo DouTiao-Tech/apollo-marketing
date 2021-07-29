@@ -30,15 +30,11 @@
 2. 启动应用，不同环境下添加`-Dspring.profiles.active=dev`参数，目前支持`dev`、`prod`两个环境
 3. 接口文档地址，http://localhost:8888/swagger-ui.html
 
-## 前端
-
-[apollo-marketing-frontend](https://github.com/DouTiao-Tech/apollo-marketing-frontend)
-
-## 开发规范
+### 开发规范
 
 * [HTTP-Restful](./.doc/HTTP-RESTful.md)
 
-# 如何单元测试
+### 如何单元测试
 
 * Hamcrest: https://dzone.com/articles/hamcrest-vs-assertj-assertion-frameworks-which-one
 * Mocktio: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html
@@ -48,3 +44,15 @@
 mvn clean test
 ```
 `apollo-test`模块的`target/site/jacoco-aggregate/index.html`有相应的测试报告
+
+## 前端
+
+[apollo-marketing-frontend](https://github.com/DouTiao-Tech/apollo-marketing-frontend)
+
+## 前后端交互api 
+前后端交互API使用[apollo-marketing-api](https://github.com/DouTiao-Tech/apollo-marketing-api)，这个项目是自动生成的代码。
+
+后端接口变更后，只需要在github actions点一下重新发布web api即可，代码会自动生成到[apollo-marketing-api](https://github.com/DouTiao-Tech/apollo-marketing-api)项目中。
+
+![image](https://user-images.githubusercontent.com/19494806/127437193-391bba44-156e-4849-9d8e-d3158fa92780.png)
+
