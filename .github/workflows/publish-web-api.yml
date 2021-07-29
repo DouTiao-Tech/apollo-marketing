@@ -10,6 +10,10 @@ on:
         description: 'pom version'
         required: true
         default: '1.0-SNAPSHOT'
+      message:
+        description: 'commit message'
+        required: true
+        default: 'update openapi.yaml'
 
 jobs:
   build:
@@ -38,9 +42,10 @@ jobs:
         run: mvn -B verify --file pom.xml -Drevision=${{github.event.inputs.revision}}
 
       - name: Upload to GitHub
-          uses: LasyIsLazy/github-upload-action@v0.0.1
-          with:
-            access-token: ${{ secrets.REPO_ACCESS_TOKEN }}
-            file-path: ./starter/target/openapi.yaml
-            username: DouTiao-Tech
-            repo: apollo-marketing-api
+        uses: LasyIsLazy/github-upload-action@v0.0.2
+        with:
+          access-token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          file-path: ./starter/target/openapi.yaml
+          username: DouTiao-Tech
+          repo: apollo-marketing-api
+          commit-message: ${{github.event.inputs.message}}
