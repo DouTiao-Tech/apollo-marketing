@@ -52,7 +52,7 @@ mvn clean test
 ## 前后端交互api 
 前后端交互API使用[apollo-marketing-api](https://github.com/DouTiao-Tech/apollo-marketing-api)，这个项目是自动生成的代码。
 
-后端接口变更后，只需要在github actions点一下重新发布web api即可，代码会自动生成到[apollo-marketing-api](https://github.com/DouTiao-Tech/apollo-marketing-api)项目中。
+后端接口变更后，只需要在github actions点一下重新发布web api即可，代码会自动生成到[apollo-marketing-api](https://github.com/DouTiao-Tech/apollo-marketing-api)项目中，更新后前端项目`npm install`即可拉去最新的api。
 
 ![image](https://user-images.githubusercontent.com/19494806/127437193-391bba44-156e-4849-9d8e-d3158fa92780.png)
 
