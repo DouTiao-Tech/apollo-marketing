@@ -45,7 +45,7 @@ jobs:
         uses: LasyIsLazy/github-upload-action@v0.0.2
         with:
           access-token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          file-path: ./starter/target/openapi.yaml
+          file-path: ./starter/target/openapi-generated-sources
           username: DouTiao-Tech
           repo: apollo-marketing-api
           commit-message: ${{github.event.inputs.message}}

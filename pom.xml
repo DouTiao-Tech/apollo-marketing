@@ -16,8 +16,7 @@
         <fontend-maven-plugin.version>1.9.1</fontend-maven-plugin.version>
         <jococo-maven-plugin.version>0.8.7</jococo-maven-plugin.version>
         <springdoc-openapi-maven-plugin.version>1.1</springdoc-openapi-maven-plugin.version>
-        <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
-        <swagger-codegen-maven-plugin.version>3.0.27</swagger-codegen-maven-plugin.version>
+        <openapi-generator-maven-plugin.version>5.2.0</openapi-generator-maven-plugin.version>
         <spring-boot.version>2.5.2</spring-boot.version>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
         <dubbo.version>3.0.1</dubbo.version>
@@ -217,6 +216,11 @@
                     <groupId>org.springdoc</groupId>
                     <artifactId>springdoc-openapi-maven-plugin</artifactId>
                     <version>${springdoc-openapi-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.openapitools</groupId>
+                    <artifactId>openapi-generator-maven-plugin</artifactId>
+                    <version>${openapi-generator-maven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
