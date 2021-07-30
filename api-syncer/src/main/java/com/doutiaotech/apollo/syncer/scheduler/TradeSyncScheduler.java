@@ -1,7 +1,6 @@
 package com.doutiaotech.apollo.syncer.scheduler;
 
 import com.doutiaotech.apollo.core.utils.DateTimeUtils;
-import com.doutiaotech.apollo.core.utils.JsonUtils;
 import com.doutiaotech.apollo.external.dy.api.OrderApi;
 import com.doutiaotech.apollo.external.dy.request.Request;
 import com.doutiaotech.apollo.external.dy.request.TradeSearch;
@@ -11,24 +10,20 @@ import com.doutiaotech.apollo.external.dy.response.TradeSearchPage.ShopOrderList
 import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
 import com.doutiaotech.apollo.infrastructure.mysql.enums.SyncType;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
+import com.doutiaotech.apollo.syncer.tx.TradeService;
 import lombok.extern.slf4j.Slf4j;
-import org.jooq.lambda.Unchecked;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.Future;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
 public class TradeSyncScheduler extends BaseSyncScheduler {
-
-    public static final String TRADE_TOPIC = "trade";
 
     @Autowired
     private SyncItemDao syncItemDao;
@@ -37,10 +32,10 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
     private OrderApi orderApi;
 
     @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private ThreadPoolTaskExecutor tradeSyncExecutor;
 
     @Autowired
-    private ThreadPoolTaskExecutor tradeSyncExecutor;
+    private TradeService tradeService;
 
     @Override
     protected List<SyncItem> findSyncItem() {
@@ -56,8 +51,6 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
     class TradeSyncTask implements Runnable {
 
         SyncItem syncItem;
-        long updateTimeStart;
-        long updateTimeEnd;
 
         TradeSyncTask(SyncItem syncItem) {
             this.syncItem = syncItem;
@@ -67,34 +60,29 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
         public void run() {
             LocalDateTime progress = syncItem.resolveProgress();
             LocalDateTime end = syncItem.resolveEnd();
-            updateTimeStart = DateTimeUtils.toTimestamp(progress);
-            updateTimeEnd = DateTimeUtils.toTimestamp(end);
+            long updateTimeStart = DateTimeUtils.toTimestamp(progress);
+            long updateTimeEnd = DateTimeUtils.toTimestamp(end);
             log.info("start sync trade for user#{} between {} and {}", syncItem.getShopId(), progress, end);
             try {
                 long sizeSum = 0;
                 while (!syncItem.isFinish()) {
                     Request<TradeSearch> request = buildRequest(updateTimeStart, updateTimeEnd);
                     Response<TradeSearchPage> response = orderApi.searchList(request);
-                    sizeSum += processResponse(response);
+                    TradeSearchPage data = response.getData();
+                    if (CollectionUtils.isEmpty(data.getShop_order_list())) {
+                        updateTimeStart = updateTimeEnd;
+                    } else {
+                        sizeSum += tradeService.sendToKafka(data.getShop_order_list());
+                        updateTimeStart = nextUpdateTimeStart(data.getShop_order_list());
+                    }
+                    syncItem.updateProgress(DateTimeUtils.longToDateTime(updateTimeStart));
+                    syncItem = syncItemDao.save(syncItem);
                 }
-                log.info("sync {} trade to kafka for user#{} between {} and {}", sizeSum, syncItem.getShopId(),
+                log.info("sync {} trade to kafka for user#{} updateTime between {} ~ {}", sizeSum, syncItem.getShopId(),
                         DateTimeUtils.longToDateTime(updateTimeStart), DateTimeUtils.longToDateTime(updateTimeEnd));
             } catch (Exception e) {
                 log.error("sync trade error, syncItem:" + syncItem, e);
             }
-        }
-
-        @Transactional
-        long processResponse(Response<TradeSearchPage> response) {
-            List<ShopOrderListBean> shop_order_list = response.getData().getShop_order_list();
-            int size = shop_order_list.size();
-            shop_order_list.stream()
-                    .map(order -> kafkaTemplate.send(TRADE_TOPIC, order.getOrder_id(), JsonUtils.toJson(order)))
-                    .collect(Collectors.toList()).forEach(Unchecked.consumer(Future::get));
-            updateTimeStart = size == 0 ? updateTimeEnd : nextUpdateTimeStart(shop_order_list);
-            syncItem.updateProgress(DateTimeUtils.longToDateTime(updateTimeStart));
-            syncItem = syncItemDao.save(syncItem);
-            return size;
         }
 
         long nextUpdateTimeStart(List<ShopOrderListBean> shop_order_list) {

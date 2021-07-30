@@ -1,18 +1,5 @@
 package com.doutiaotech.apollo.syncer.scheduler;
 
-import static com.doutiaotech.apollo.syncer.scheduler.TradeSyncScheduler.TRADE_TOPIC;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDateTime;
-import java.util.Collections;
-
 import com.doutiaotech.apollo.core.utils.DateTimeUtils;
 import com.doutiaotech.apollo.core.utils.JsonUtils;
 import com.doutiaotech.apollo.external.dy.api.OrderApi;
@@ -23,20 +10,31 @@ import com.doutiaotech.apollo.infrastructure.mysql.dao.SyncItemDao;
 import com.doutiaotech.apollo.infrastructure.mysql.enums.SyncType;
 import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
 import com.doutiaotech.apollo.syncer.scheduler.TradeSyncScheduler.TradeSyncTask;
-
+import com.doutiaotech.apollo.syncer.tx.TradeService;
+import lombok.SneakyThrows;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.concurrent.ListenableFuture;
 
-import lombok.SneakyThrows;
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+
+import static com.doutiaotech.apollo.syncer.tx.TradeService.TRADE_TOPIC;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {TradeSyncScheduler.class})
@@ -58,6 +56,9 @@ public class TradeSyncSchedulerTest {
     @MockBean
     SyncItemDao syncItemDao;
 
+    @SpyBean
+    TradeService tradeService;
+
     @Autowired
     TradeSyncScheduler tradeSyncScheduler;
 
@@ -78,6 +79,10 @@ public class TradeSyncSchedulerTest {
 
         TradeSyncTask task = tradeSyncScheduler.new TradeSyncTask(mockSyncItem());
         task.run();
+
+        ArgumentCaptor<List> ac = ArgumentCaptor.forClass(List.class);
+        verify(tradeService, atLeast(3)).sendToKafka(ac.capture());
+        assertThat(ac.getAllValues().stream().mapToInt(List::size).sum()).isEqualTo(3);
 
         InOrder inOrder = inOrder(kafkaTemplate);
         inOrder.verify(kafkaTemplate).send(TRADE_TOPIC, Long.toString(1L),
