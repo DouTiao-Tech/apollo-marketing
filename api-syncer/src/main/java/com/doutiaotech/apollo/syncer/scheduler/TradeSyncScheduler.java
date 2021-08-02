@@ -39,8 +39,13 @@ public class TradeSyncScheduler extends BaseSyncScheduler {
 
     @Override
     protected List<SyncItem> findSyncItem() {
-        // TODO: time filter
-        return syncItemDao.findByTypeAndStop(SyncType.FETCH_TRADE, false);
+        // 30分钟内没有同步过的店铺
+        SyncType fetchTrade = SyncType.FETCH_TRADE;
+        String maxProgress = fetchTrade.toJson(LocalDateTime.now().minusMinutes(30));
+        List<SyncItem> needSync = syncItemDao.findByTypeAndStopAndProgressLessThan(fetchTrade, false, maxProgress);
+        needSync.forEach(syncItem -> syncItem.updateEnd(LocalDateTime.now()));
+        syncItemDao.saveAll(needSync);
+        return needSync;
     }
 
     @Override

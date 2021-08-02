@@ -70,4 +70,8 @@ public class SyncItem {
         this.progress = getType().toJson(progress);
     }
 
+    public <T extends Comparable<?>> void updateEnd(T end) {
+        this.end = getType().toJson(end);
+    }
+
 }

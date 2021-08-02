@@ -1,9 +1,8 @@
 package com.doutiaotech.apollo.infrastructure.mysql.dao;
 
 import com.doutiaotech.apollo.infrastructure.mysql.BaseDaoTest;
-import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
 import com.doutiaotech.apollo.infrastructure.mysql.enums.SyncType;
-
+import com.doutiaotech.apollo.infrastructure.mysql.model.SyncItem;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,9 @@ public class SyncItemDaoTest extends BaseDaoTest {
     @Test
     public void test_findByTypeAndStop() {
         syncItemDao.save(newSyncItem(1L, SyncType.FETCH_TRADE, 1, 5, 10, 2, false));
-        syncItemDao.save(newSyncItem(2L, SyncType.FETCH_TRADE, 2, 4, 20, 1, false));
+        syncItemDao.save(newSyncItem(2L, SyncType.FETCH_TRADE, 2, 7, 20, 1, false));
         syncItemDao.save(newSyncItem(3L, SyncType.FETCH_TRADE, 3, 8, 30, 1, true));
-        Assert.assertEquals(2, syncItemDao.findByTypeAndStop(SyncType.FETCH_TRADE, false).size());
+        Assert.assertEquals(1, syncItemDao.findByTypeAndStopAndProgressLessThan(SyncType.FETCH_TRADE, false, "7").size());
         syncItemDao.deleteAll();
     }
 
