@@ -38,6 +38,7 @@
 - 单元测试框架
   * https://junit.org/junit4/
 - 断言
+  * junit assert: https://github.com/junit-team/junit4/wiki/Matchers-and-assertthat
   * Hamcrest: http://hamcrest.org/JavaHamcrest/tutorial
   * AssertJ: https://assertj.github.io/doc/
 - 模拟数据
