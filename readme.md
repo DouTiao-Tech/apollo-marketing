@@ -35,9 +35,13 @@
 * [HTTP-Restful](./.doc/HTTP-RESTful.md)
 
 ### 如何单元测试
-
-* Hamcrest: https://dzone.com/articles/hamcrest-vs-assertj-assertion-frameworks-which-one
-* Mocktio: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html
+- 单元测试框架
+  * https://junit.org/junit4/
+- 断言
+  * Hamcrest: http://hamcrest.org/JavaHamcrest/tutorial
+  * AssertJ: https://assertj.github.io/doc/
+- 模拟数据
+  * Mocktio: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html
 
 写完单元测试后，可以跑一遍，看一看测试覆盖率
 ```sh
