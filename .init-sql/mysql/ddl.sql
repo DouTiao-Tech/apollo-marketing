@@ -2,6 +2,8 @@ create table if not exists `user`
 (
     id            bigint primary key auto_increment,
     shop_name     varchar(128) not null,
+    enabled       tinyint      not null default 1,
+    expire_time   datetime     not null,
     created       datetime     not null,
     last_modified datetime     not null,
     unique key uk_sn (shop_name)

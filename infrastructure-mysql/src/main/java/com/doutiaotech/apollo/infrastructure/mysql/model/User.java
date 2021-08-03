@@ -1,12 +1,11 @@
 package com.doutiaotech.apollo.infrastructure.mysql.model;
 
-import java.time.LocalDateTime;
-
+import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import lombok.Data;
+import java.time.LocalDateTime;
 
 @Data
 public class User {
@@ -15,6 +14,10 @@ public class User {
     private Long id;
 
     private String shopName;
+
+    private Boolean enabled;
+
+    private LocalDateTime expireTime;
 
     @CreatedDate
     private LocalDateTime created;
